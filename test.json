@@ -1,0 +1,28 @@
+{
+    "preprocess": [
+        [
+            0,
+            "#include<iostream>"
+        ],
+        [
+            19,
+            "#define"
+        ]
+    ],
+    "identificators": [
+        [
+            27,
+            "PI"
+        ]
+    ],
+    "keywords": [],
+    "delimiters": [],
+    "operators": [],
+    "literals": [
+        [
+            30,
+            "3.14"
+        ]
+    ],
+    "comments": []
+}

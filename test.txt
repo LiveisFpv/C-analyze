@@ -1,0 +1,352 @@
+
+1. // Однострочный комментарий: основной файл программы
+    comment-// Однострочный комментарий: основной файл программы
+2. 
+3. #include <iostream> // Подключение стандартной библиотеки ввода-вывода
+    preproces-#include <iostream>
+    comment-// Подключение стандартной библиотеки ввода-вывода
+4. 
+5. #define PI 3.14159 // Определение макроса
+    preproces-#define
+    identificator-PI
+    literal-3.14159
+    comment-// Определение макроса
+6. 
+7. /*
+    comment-/*
+    Многострочный комментарий:
+    Пример программы на C++
+    Содержит основные синтаксические элементы.
+*/
+8.     Многострочный комментарий:
+9.     Пример программы на C++
+10.     Содержит основные синтаксические элементы.
+11. */
+12. 
+13. int main() { // Ключевое слово int, main - идентификатор, { - разделитель
+    keyword-int
+    identificator-main
+    delimiter-(
+    delimiter-)
+    delimiter-{
+    comment-// Ключевое слово int, main - идентификатор, { - разделитель
+14.     // Объявление переменных
+    comment-// Объявление переменных
+15.     int a = 42;              // Целочисленный литерал
+    keyword-int
+    identificator-a
+    operator-=
+    literal-42
+    delimiter-;
+    comment-// Целочисленный литерал
+16.     double b = 2.718;        // Вещественный литерал
+    keyword-double
+    identificator-b
+    operator-=
+    literal-2.718
+    delimiter-;
+    comment-// Вещественный литерал
+17.     float c = 1.5e-5;        // Литерал в экспоненциальной нотации
+    keyword-float
+    identificator-c
+    operator-=
+    literal-1.5e-5
+    delimiter-;
+    comment-// Литерал в экспоненциальной нотации
+18.     char d = 'A';            // Символьный литерал
+    keyword-char
+    identificator-d
+    operator-=
+    literal-'A'
+    delimiter-;
+    comment-// Символьный литерал
+19.     bool isValid = true;     // Логический литерал
+    keyword-bool
+    identificator-isValid
+    operator-=
+    literal-true
+    delimiter-;
+    comment-// Логический литерал
+20.     std::string greeting = "Hello, World!"; // Строковой литерал
+    identificator-std
+    delimiter-:
+    delimiter-:
+    keyword-string
+    identificator-greeting
+    operator-=
+    literal-"Hello, World!"
+    delimiter-;
+    comment-// Строковой литерал
+21. 
+22.     // Операторы: арифметические, логические, присваивания
+    comment-// Операторы: арифметические, логические, присваивания
+23.     int sum = a + static_cast<int>(b); // Оператор приведения типов (static_cast), оператор сложения (+)
+    keyword-int
+    identificator-sum
+    operator-=
+    identificator-a
+    operator-+
+    keyword-static_cast
+    operator-<
+    keyword-int
+    operator->
+    delimiter-(
+    identificator-b
+    delimiter-)
+    delimiter-;
+    comment-// Оператор приведения типов (static_cast), оператор сложения (+)
+24.     bool check = (a > 0) && (b < 5);   // Операторы сравнения (>), (<), логический оператор (&&)
+    keyword-bool
+    identificator-check
+    operator-=
+    delimiter-(
+    identificator-a
+    operator->
+    literal-0
+    delimiter-)
+    operator-&&
+    delimiter-(
+    identificator-b
+    operator-<
+    literal-5
+    delimiter-)
+    delimiter-;
+    comment-// Операторы сравнения (>), (<), логический оператор (&&)
+25. 
+26.     // Управляющие операторы: условные операторы и циклы
+    comment-// Управляющие операторы: условные операторы и циклы
+27.     if (check) {  // Ключевое слово if, разделитель (, )
+    keyword-if
+    delimiter-(
+    identificator-check
+    delimiter-)
+    delimiter-{
+    comment-// Ключевое слово if, разделитель (, )
+28.         std::cout << greeting << " Sum: " << sum << std::endl; // Операторы вывода, литералы и разделители
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    identificator-greeting
+    operator-<<
+    literal-" Sum: "
+    operator-<<
+    identificator-sum
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+    comment-// Операторы вывода, литералы и разделители
+29.     } else { // Ключевое слово else
+    delimiter-}
+    keyword-else
+    delimiter-{
+    comment-// Ключевое слово else
+30.         std::cout << "Condition is false." << std::endl; // Строковой литерал
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    literal-"Condition is false."
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+    comment-// Строковой литерал
+31.     }
+    delimiter-}
+32. 
+33.     for (int i = 0; i < 5; ++i) { // Цикл for, операторы ++ и <
+    keyword-for
+    delimiter-(
+    keyword-int
+    identificator-i
+    operator-=
+    literal-0
+    delimiter-;
+    identificator-i
+    operator-<
+    literal-5
+    delimiter-;
+    operator-++
+    identificator-i
+    delimiter-)
+    delimiter-{
+    comment-// Цикл for, операторы ++ и <
+34.         std::cout << "Loop iteration: " << i << std::endl; // Строковой и числовой литерал, оператор вывода
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    literal-"Loop iteration: "
+    operator-<<
+    identificator-i
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+    comment-// Строковой и числовой литерал, оператор вывода
+35.     }
+    delimiter-}
+36. 
+37.     // Оператор switch и перечисление
+    comment-// Оператор switch и перечисление
+38.     enum Color { RED, GREEN, BLUE }; // Перечисление с идентификаторами
+    keyword-enum
+    identificator-Color
+    delimiter-{
+    identificator-RED
+    delimiter-,
+    identificator-GREEN
+    delimiter-,
+    identificator-BLUE
+    delimiter-}
+    delimiter-;
+    comment-// Перечисление с идентификаторами
+39.     Color myColor = GREEN; // Инициализация переменной перечисления
+    identificator-Color
+    identificator-myColor
+    operator-=
+    identificator-GREEN
+    delimiter-;
+    comment-// Инициализация переменной перечисления
+40.     switch (myColor) { // Оператор switch
+    keyword-switch
+    delimiter-(
+    identificator-myColor
+    delimiter-)
+    delimiter-{
+    comment-// Оператор switch
+41.         case RED: // Метка case
+    keyword-case
+    identificator-RED
+    delimiter-:
+    comment-// Метка case
+42.             std::cout << "Red color" << std::endl;
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    literal-"Red color"
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+43.             break; // Оператор break
+    keyword-break
+    delimiter-;
+    comment-// Оператор break
+44.         case GREEN:
+    keyword-case
+    identificator-GREEN
+    delimiter-:
+45.             std::cout << "Green color" << std::endl;
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    literal-"Green color"
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+46.             break;
+    keyword-break
+    delimiter-;
+47.         case BLUE:
+    keyword-case
+    identificator-BLUE
+    delimiter-:
+48.             std::cout << "Blue color" << std::endl;
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    literal-"Blue color"
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+49.             break;
+    keyword-break
+    delimiter-;
+50.         default: // Метка default
+    identificator-default
+    delimiter-:
+    comment-// Метка default
+51.             std::cout << "Unknown color" << std::endl;
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    literal-"Unknown color"
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+52.     }
+    delimiter-}
+53. 
+54.     // Указатели и операции с указателями
+    comment-// Указатели и операции с указателями
+55.     int* p = &a; // Оператор взятия адреса &, указатель
+    keyword-int
+    operator-*
+    identificator-p
+    operator-=
+    operator-&
+    identificator-a
+    delimiter-;
+    comment-// Оператор взятия адреса &, указатель
+56.     *p = 10; // Оператор разыменования *
+    operator-*
+    identificator-p
+    operator-=
+    literal-10
+    delimiter-;
+    comment-// Оператор разыменования *
+57. 
+58.     // Строковый литерал с экранированными символами
+    comment-// Строковый литерал с экранированными символами
+59.     std::cout << "File path: C:\\Program Files\\MyApp" << std::endl; 
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-cout
+    operator-<<
+    literal-"File path: C:\\Program Files\\MyApp"
+    operator-<<
+    identificator-std
+    delimiter-:
+    delimiter-:
+    identificator-endl
+    delimiter-;
+60. 
+61.     return 0; // Ключевое слово return
+    keyword-return
+    literal-0
+    delimiter-;
+    comment-// Ключевое слово return
+62. }
+    delimiter-}

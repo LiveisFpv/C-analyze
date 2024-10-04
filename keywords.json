@@ -1,0 +1,6 @@
+{
+    "types":["int", "char", "double", "float", "void", "bool","string"],
+    "control structures":["if","else","switch","case","catch","while","for","do","break","continue"],
+    "other":["static_cast", "dynamic_cast", "const_cast", "reinterpret_cast","return","class","enum","public","protected","private","new","gcnew","delete","try","catch",
+    "namespace","using","const","constexpr","volatile","virtual","static","template","typename","operator","this"]
+}

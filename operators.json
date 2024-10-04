@@ -1,0 +1,19 @@
+{   
+    "double":{
+        "logics":["&&","||","!"],
+        "comparisons":["<=",">=","==","!="],
+        "Assignments":["+=","-=","*=","/=","%="],
+        "bitwises":["<<",">>"],
+        "increments":["++","--"],
+        "ternary":["?:"],
+        "pointer":["->"]
+    },
+    "single":{
+        "ariphmetics":["+","-","*","/","%"],
+        "logics":["!"],
+        "comparisons":["<",">"],
+        "Assignments":["="],
+        "bitwises":["&","|","^","~"],
+        "pointer":["*","&"]
+    }
+}
