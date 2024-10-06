@@ -25,14 +25,35 @@ class analysis_c_code():
         __literals=json.load(file)
     
     def __init__(self):
-        self.analyze_results ={"preprocess":[],"identificators":[],"keywords":[],"delimiters":[],"operators":[],"literals":[],"comments":[]}
+        self.analyze_results ={"preprocess":[],
+                               "identificators":[],
+                               "keywords":{
+                                   
+                               },
+                               "delimiters":{
+                                   
+                               },
+                               "operators":{
+                                   
+                               },
+                               "literals":[],
+                               "comments":[]}
+        for delimiter in self.__delimiters["delimiters"]:
+            self.analyze_results["delimiters"][delimiter]=[]
+        for operator_len in self.__operators:
+            for operator_type in self.__operators[operator_len]:
+                for operator in self.__operators[operator_len][operator_type]:
+                    self.analyze_results["operators"][operator]=[]
+        for keywords in self.__keywords:
+            for keyword in self.__keywords[keywords]:
+                self.analyze_results["keywords"][keyword]=[]
     
     
-    async def get_result(self):
+    def get_result(self):
         json_string = json.dumps(self.analyze_results, ensure_ascii=False, indent=4)
-        return await self.__beautiful_text()
+        return json_string
     
-    async def __beautiful_text(self):
+    def __beautiful_text(self):
         # Выводим текст в красивом виде
         output=""
         self.file_content=self.file_content_copy
@@ -62,25 +83,25 @@ class analysis_c_code():
         return output
 
     # Запускаем обработку текста
-    async def run_from_string(self,string):
+    def run_from_string(self,string):
         self.file_content = string
         self.file_content_copy=string
-        await self.__analyze_code()
+        self.__analyze_code()
     
     # Запускаем основной цикл
-    async def run_file(self,file_path):
+    def run_file(self,file_path):
         self.file_path = file_path
         self.file_content_output = ""
         self.file_path_output = ""
-        self.file_content = await self.__read_file()
+        self.file_content = self.__read_file()
         self.file_content_copy=self.file_content
-        await self.__analyze_code()
-        await self.__write_json_file()
-        await self._write_file(await self.__beautiful_text())
+        self.__analyze_code()
+        self.__write_json_file()
+        #self._write_file(self.__beautiful_text())
 
     #Считывание из файла с допустимыми расширениями
     #Считываем файл с программой на языке C++
-    async def __read_file(self):
+    def __read_file(self):
         read=False
         for suffix in self.__suffixes:
             if suffix in self.file_path:
@@ -93,34 +114,34 @@ class analysis_c_code():
             print("File format not supported")
             return ""
 
-    async def __replace_substring(self,original_string, start_index, end_index, replacement):
+    def __replace_substring(self,original_string, start_index, end_index, replacement):
     # Формируем новую строку, используя срезы
         new_string = original_string[:start_index] + replacement + original_string[end_index:]
         return new_string
     
     # Запись результирующего json
-    async def __write_json_file(self):
+    def __write_json_file(self):
         with open(self.file_path_output.replace(".txt",".json"), 'w', encoding='utf-8') as file:
             json.dump(self.analyze_results, file, ensure_ascii=False, indent=4)  # Используем параметры для форматирования и кодировки
         json_string = json.dumps(self.analyze_results, ensure_ascii=False, indent=4)
         print(json_string)
 
     #Просто запись в файл, больше и сказать нечего
-    async def _write_file(self,output):
+    def _write_file(self,output):
         self.file_content_output=output
         with open(self.file_path_output, 'w') as file:
             file.write(self.file_content_output)
     
     # Исключаем из рассмотрения include и define
-    async def __analyze_preprocess(self):
+    def __analyze_preprocess(self):
         type=self.__Types.preprocess
         indexstart = self.file_content.find("#include")
         while indexstart != -1:
             indexend = sorted([self.file_content.find("\"",self.file_content.find("\"",indexstart)+1)+1,self.file_content.find(">",indexstart)+1,self.file_content.find("\n",indexstart)+1,len(self.file_content)])
             for i in indexend:
                 if i !=0:
-                    await self.__add_to_json(type,indexstart,i)
-                    self.file_content=await self.__replace_substring(self.file_content,indexstart,i," "*(i-indexstart))
+                    self.__add_to_json(type,indexstart,i)
+                    self.file_content=self.__replace_substring(self.file_content,indexstart,i," "*(i-indexstart))
                     break
 
             indexstart = self.file_content.find("#include")
@@ -130,8 +151,8 @@ class analysis_c_code():
             indexend = sorted([self.file_content.find("/",indexstart),self.file_content.find("\n",indexstart),len(self.file_content),self.file_content.find(" ",indexstart)])
             for i in indexend:
                 if i !=-1:
-                    await self.__add_to_json(type,indexstart,i)
-                    self.file_content=await self.__replace_substring(self.file_content,indexstart,i," "*(i-indexstart))
+                    self.__add_to_json(type,indexstart,i)
+                    self.file_content=self.__replace_substring(self.file_content,indexstart,i," "*(i-indexstart))
                     break
             indexstart = self.file_content.find("#define")
     # Удаляем не нужное    
@@ -140,17 +161,20 @@ class analysis_c_code():
             indexend = sorted([self.file_content.find("/",indexstart),self.file_content.find("\n",indexstart),self.file_content.find(" ",indexstart)])
             for i in indexend:
                 if i !=-1:
-                    await self.__add_to_json(type,indexstart,i)
-                    self.file_content=await self.__replace_substring(self.file_content,indexstart,i," "*(i-indexstart))
+                    self.__add_to_json(type,indexstart,i)
+                    self.file_content=self.__replace_substring(self.file_content,indexstart,i," "*(i-indexstart))
                     break
             indexstart = self.file_content.find("#pragma")
 
     # Индексируем все по категориям в Json файл
-    async def __add_to_json(self,type,indexstart,indexend):
-        self.analyze_results[type.name].append([indexstart,self.file_content[indexstart:indexend]])
+    def __add_to_json(self,type,indexstart,indexend,key=None):
+        if key!=None:
+            self.analyze_results[type.name][key].append([indexstart,self.file_content[indexstart:indexend]])
+        else:
+            self.analyze_results[type.name].append([indexstart,self.file_content[indexstart:indexend]])
     
     #Поиск комментариев в исходном коде
-    async def __analyze_comments(self):
+    def __analyze_comments(self):
         type=self.__Types.comments
         index=0
         while index < len(self.file_content)-1:
@@ -158,30 +182,30 @@ class analysis_c_code():
             if self.file_content[index]=="/" and self.file_content[index+1]=="/":
                 indexend = self.file_content.find("\n",index)
                 if indexend!= -1:
-                    await self.__add_to_json(type,index,indexend)
-                    self.file_content=await self.__replace_substring(self.file_content,index,indexend," "*(indexend-index))
+                    self.__add_to_json(type,index,indexend)
+                    self.file_content=self.__replace_substring(self.file_content,index,indexend," "*(indexend-index))
                     index=indexend
                 else:
                     indexend=len(self.file_content)
-                    await self.__add_to_json(type,index,indexend)
-                    self.file_content=await self.__replace_substring(self.file_content,index,indexend," "*(indexend-index))
+                    self.__add_to_json(type,index,indexend)
+                    self.file_content=self.__replace_substring(self.file_content,index,indexend," "*(indexend-index))
                     index=indexend
             #Многострочные комментарии        
             elif self.file_content[index]=="/" and self.file_content[index+1]=="*":
                 indexend = self.file_content.find("*/",index)
                 if indexend!= -1:
-                    await self.__add_to_json(type,index,indexend+2)
-                    self.file_content=await self.__replace_substring(self.file_content,index,indexend+2," "*(indexend+2-index))
+                    self.__add_to_json(type,index,indexend+2)
+                    self.file_content=self.__replace_substring(self.file_content,index,indexend+2," "*(indexend+2-index))
                     index=indexend+2
                 else:
                     indexend=len(self.file_content)
-                    await self.__add_to_json(type,index,indexend)
-                    self.file_content=await self.__replace_substring(self.file_content,index,indexend," "*(indexend-index))
+                    self.__add_to_json(type,index,indexend)
+                    self.file_content=self.__replace_substring(self.file_content,index,indexend," "*(indexend-index))
                     index=indexend
             else:
                 index+=1
     
-    async def __analyze_keywords(self):
+    def __analyze_keywords(self):
         type=self.__Types.keywords
         for keyword_type in self.__keywords:
             for keyword in self.__keywords[keyword_type]:
@@ -189,22 +213,22 @@ class analysis_c_code():
                 while indexstart!=-1:
                     indexend = indexstart + len(keyword)
                     if len(re.findall(r'[A-Za-zА-Яа-яёЁ_]',self.file_content[indexstart-1]))==0:
-                        await self.__add_to_json(type,indexstart,indexend)
-                        self.file_content=await self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
+                        self.__add_to_json(type,indexstart,indexend,keyword)
+                        self.file_content=self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
                     indexstart=self.file_content.find(keyword,indexend)
         pass
     
-    async def __analyze_delimiters(self):
+    def __analyze_delimiters(self):
         type=self.__Types.delimiters
         for delimiter in self.__delimiters["delimiters"]:
             indexstart=self.file_content.find(delimiter)
             while indexstart!=-1:
                 indexend = indexstart + len(delimiter)
-                await self.__add_to_json(type,indexstart,indexend)
-                self.file_content=await self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
+                self.__add_to_json(type,indexstart,indexend,delimiter)
+                self.file_content=self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
                 indexstart=self.file_content.find(delimiter,indexend)
     
-    async def __analyze_operators(self):
+    def __analyze_operators(self):
         type=self.__Types.operators
         for operator_len in self.__operators:
             for operator_type in self.__operators[operator_len]:
@@ -212,11 +236,11 @@ class analysis_c_code():
                     indexstart=self.file_content.find(operator)
                     while indexstart!=-1:
                         indexend = indexstart + len(operator)
-                        await self.__add_to_json(type,indexstart,indexend)
-                        self.file_content=await self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
+                        self.__add_to_json(type,indexstart,indexend,operator)
+                        self.file_content=self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
                         indexstart=self.file_content.find(operator,indexend)
     
-    async def __analyze_identificators(self):
+    def __analyze_identificators(self):
         type=self.__Types.identificators
         # Регулярное выражение для поиска всех слов
         pattern = r'\b[\wa-zA-Zа-яА-ЯёЁ_0-9]+\b'
@@ -228,18 +252,18 @@ class analysis_c_code():
         for match in matches:
             word = match.group()  # Слово
             start_index = match.start()  # Индекс первого символа слова
-            await self.__add_to_json(type,start_index,start_index+len(word))
+            self.__add_to_json(type,start_index,start_index+len(word))
             self.file_content=self.file_content.replace(match.group(), " "*len(match.group()),1)
             #print(word)
 
-    async def __find_numeric_literals(self):
+    def __find_numeric_literals(self):
         # Регулярное выражение для поиска числовых литералов
         numeric_regex = r'-?\b\d+(\.\d+)?([eE][-+]?\d+)?\b'
 
         # Найти все совпадения числовых литералов
         numeric_literals = re.finditer(numeric_regex, self.file_content)
         return numeric_literals
-    async def __analyze_literals(self):
+    def __analyze_literals(self):
         type=self.__Types.literals
         #Находим все остальные литералы
         for literal in self.__literals["literals"]:
@@ -250,13 +274,13 @@ class analysis_c_code():
                 else:
                     indexend=indexstart+len(literal)
                 if indexend!=0:
-                    await self.__add_to_json(type,indexstart,indexend)
-                    self.file_content=await self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
+                    self.__add_to_json(type,indexstart,indexend)
+                    self.file_content=self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
                 else:
                     break
                 indexstart=self.file_content.find(literal,indexend)
         #Находим все цифры
-        numeric_literals=await self.__find_numeric_literals()
+        numeric_literals=self.__find_numeric_literals()
         #print(numeric_literals)
         #Отсеиваем среди них цифровые литералы
         for match in numeric_literals:
@@ -265,33 +289,33 @@ class analysis_c_code():
             indexend = indexstart+len(number)
             #print(re.findall(r'[A-Za-zА-Яа-яёЁ_]',self.file_content[indexstart-1]))
             if len(re.findall(r'[A-Za-zА-Яа-яёЁ_]',self.file_content[indexstart-1]))==0:
-                await self.__add_to_json(type,indexstart,indexend)
-                self.file_content=await self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
+                self.__add_to_json(type,indexstart,indexend)
+                self.file_content=self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
 
 
     #Анализируем код в порядке шапка-комментарии-литералы-операторы-блоки-ключ слова-идентификаторы
-    async def __analyze_code(self):
-        await self.__analyze_preprocess()
+    def __analyze_code(self):
+        self.__analyze_preprocess()
         #print(self.file_content)
-        await self.__analyze_comments()
+        self.__analyze_comments()
         #print(self.file_content)
-        await self.__analyze_literals()
+        self.__analyze_literals()
         #print(self.file_content)
-        await self.__analyze_operators()
+        self.__analyze_operators()
         #print(self.file_content)
-        await self.__analyze_delimiters()
+        self.__analyze_delimiters()
         #print(self.file_content)
-        await self.__analyze_keywords()
+        self.__analyze_keywords()
         #print(self.file_content)
-        await self.__analyze_identificators()
+        self.__analyze_identificators()
         #print(self.file_content)
-        #await self.write_file()
+        #self.write_file()
         #print(self.analyze_results)
-        #await self.write_json_file()
+        #self.write_json_file()
 
 if __name__ == "__main__":
-    async def main():
+    def main():
         c2py=analysis_c_code()
-        await c2py.run_file("test.cpp")
+        c2py.run_file("test.cpp")
     # Запуск основного цикла событий
     asyncio.run(main())

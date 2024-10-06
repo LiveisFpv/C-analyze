@@ -9,6 +9,7 @@
     Пример программы на C++
     Содержит основные синтаксические элементы.
 */
+using namespace std;
 
 int main() { // Ключевое слово int, main - идентификатор, { - разделитель
     // Объявление переменных
@@ -17,38 +18,24 @@ int main() { // Ключевое слово int, main - идентификато
     float c = 1.5e-5;        // Литерал в экспоненциальной нотации
     char d = 'A';            // Символьный литерал
     bool isValid = true;     // Логический литерал
-    std::string greeting = "Hello, World!"; // Строковой литерал
+    int mas[10]; // Создание массива
+    mas[0] = 1; // Инициализация первого элемента массива
+    string greeting = "Hello, World!"; // Строковой литерал
 
     // Операторы: арифметические, логические, присваивания
-    int sum = a + static_cast<int>(b); // Оператор приведения типов (static_cast), оператор сложения (+)
+    int sum = a + (b); // оператор сложения (+)
     bool check = (a > 0) && (b < 5);   // Операторы сравнения (>), (<), логический оператор (&&)
 
     // Управляющие операторы: условные операторы и циклы
-    if (check) {  // Ключевое слово if, разделитель (, )
-        std::cout << greeting << " Sum: " << sum << std::endl; // Операторы вывода, литералы и разделители
-    } else { // Ключевое слово else
-        std::cout << "Condition is false." << std::endl; // Строковой литерал
+    if (check || mas[0]) {  // Ключевое слово if, разделитель (, )
+        cout << greeting << " Sum: " << sum << endl; // Операторы вывода, литералы и разделители
+    }
+    else { // Ключевое слово else
+        cout << "Condition is false." << endl; // Строковой литерал
     }
 
     for (int i = 0; i < 5; ++i) { // Цикл for, операторы ++ и <
-        std::cout << "Loop iteration: " << i << std::endl; // Строковой и числовой литерал, оператор вывода
-    }
-
-    // Оператор switch и перечисление
-    enum Color { RED, GREEN, BLUE }; // Перечисление с идентификаторами
-    Color myColor = GREEN; // Инициализация переменной перечисления
-    switch (myColor) { // Оператор switch
-        case RED: // Метка case
-            std::cout << "Red color" << std::endl;
-            break; // Оператор break
-        case GREEN:
-            std::cout << "Green color" << std::endl;
-            break;
-        case BLUE:
-            std::cout << "Blue color" << std::endl;
-            break;
-        default: // Метка default
-            std::cout << "Unknown color" << std::endl;
+        cout << "Loop iteration: " << i << endl; // Строковой и числовой литерал, оператор вывода
     }
 
     // Указатели и операции с указателями
@@ -56,7 +43,7 @@ int main() { // Ключевое слово int, main - идентификато
     *p = 10; // Оператор разыменования *
 
     // Строковый литерал с экранированными символами
-    std::cout << "File path: C:\\Program Files\\MyApp" << std::endl; 
+    cout << "File path: C:\\Program Files\\MyApp" << endl; 
 
     return 0; // Ключевое слово return
 }
