@@ -1,7 +1,9 @@
+from enum import Enum
 import cpp2py
 import sys
 import matplotlib.pyplot as plt
 import networkx as nx
+import json
 
 sys.setrecursionlimit(1000000)
 
@@ -24,7 +26,20 @@ class Tree:
     def __str__(self) -> str:
         return self.root
 
+class operator_Tree(Tree):
+    def __init__(self,root, index_start=0, index_end=0, children=None):
+        super().__init__(root, index_start, index_end, children)
+    #Добавляем операции в порядке приоритетов
+    def add_child(self,tree):
+        pass
+
 class indexTree(cpp2py.analysis_c_code):
+    class operator_type(Enum):
+        LEFT_RIGHT=1
+        LEFT=2
+        RIGHT=3
+    with open("operators.json", "r") as file:
+        __operators=json.load(file)
     # Конструктор для создания дерева индексации
     def __init__(self, string=None, filepath=None):
         super().__init__()
@@ -36,11 +51,39 @@ class indexTree(cpp2py.analysis_c_code):
             self.run_from_string(string)
         self.__index_json = self.analyze_results
         self.__tree.index_end = self.__index_json["delimiters"]["}"][len(self.__index_json["delimiters"]["}"])-1][0] + 1
+        self.__index_list=[]
+        self.__create_index_list(self.__index_json)
+        self.__index_list.sort(key = lambda x: x[0])
+        self.__local_index={}
+        self.__create_local_index()
+        print(self.__index_list)
+        print(self.__local_index)
+    
+    #Для поиска левых и правых операндов
+    def __create_index_list(self,json,Type=None):
+        if isinstance(json,dict):
+            for type in json:
+                if Type==None:
+                    self.__create_index_list(json[type],type)
+                else:
+                    self.__create_index_list(json[type],Type)
+        else:
+            for value in json:
+                self.__index_list.append([value[0],value[1],Type])
+            
+    def __create_local_index(self):
+        index=0
+        for el in self.__index_list:
+            self.__local_index[el[0]] = index
+            index+=1
+
 
     def analyze_index_json(self):
         """Запускает анализ JSON-файла и строит дерево программы"""
         self.__build_tree_delimiter(["{", "}"])
+        self.__build_tree_keywords()
         self.__build_tree_delimiter(["(", ")"])
+        self.__build_tree_operators()
         self.__build_tree_delimiter(["[", "]"])
         self.__build_tree_identificators()
         self.__build_tree_literals()
@@ -105,10 +148,67 @@ class indexTree(cpp2py.analysis_c_code):
     Ищет оператор, индекс начала для оператора будет его крайний левый операнд, а конца крайний правый операнд
     В последстивие операнды станут потомками, для скобок необходима впоследствие пересборка дерева
     """
+    def __find_operand(self,index_start:int,type:operator_type)-> list:
+        local_operator_index=self.__local_index[index_start]
+        left_operand=local_operator_index
+        right_operand=local_operator_index
+        if type==self.operator_type.LEFT or type==self.operator_type.LEFT_RIGHT:
+            left_operand=local_operator_index-1
+            if self.__index_list[left_operand][1] in [")","]"]:
+                close=1
+                if self.__index_list[left_operand][1]==")":
+                    while close>0:
+                        left_operand-=1
+                        if self.__index_list[left_operand][1]==")":
+                            close+=1
+                        if self.__index_list[left_operand][1]=="(":
+                            close-=1
+                else:
+                    while close>0:
+                        left_operand-=1
+                        if self.__index_list[left_operand][1]=="]":
+                            close+=1
+                        if self.__index_list[left_operand][1]=="[":
+                            close-=1
+            else:
+                if self.__index_list[left_operand][2] not in ["identificators","literals"]:
+                    left_operand+=1
+        if type==self.operator_type.RIGHT or type==self.operator_type.LEFT_RIGHT:
+            right_operand=local_operator_index+1
+            if self.__index_list[right_operand][1] in ["("]:
+                open=1
+                while open>0:
+                    right_operand+=1
+                    if self.__index_list[right_operand][1]==")":
+                        open-=1
+                    if self.__index_list[right_operand][1]=="(":
+                        open+=1
+            elif self.__index_list[right_operand+1][1]=="[":
+                right_operand+=1
+                open=1
+                while open>0:
+                    right_operand+=1
+                    if self.__index_list[right_operand][1]=="]":
+                        open-=1
+                    if self.__index_list[right_operand][1]=="[":
+                        open+=1
+            else:
+                if self.__index_list[right_operand][2]not in ["identificators","literals"]:
+                    right_operand-=1
+        else:
+            return None, None
+        return left_operand, right_operand
+
     def __build_tree_operators(self):
         operators_list=self.__index_json["operators"]
         for operator in operators_list:
-            pass
+            left_operand, right_operand=self.__find_operand(operator[0], self.operator_type.LEFT_RIGHT)
+            left_operand=self.__index_list[left_operand]
+            right_operand=self.__index_list[right_operand]
+            node=Tree(operator[1],left_operand[0],right_operand[0])
+            parent = self.__get_node(node.index_start)
+            parent.add_child(node)
+
     def __build_tree_identificators(self):
         identificators=self.__index_json["identificators"]
         for identifier in identificators:
@@ -148,7 +248,7 @@ class indexTree(cpp2py.analysis_c_code):
 
         # Настройка визуализации
         plt.figure(figsize=(12, 8))
-        nx.draw(G, pos, with_labels=True, node_size=800, node_color='lightblue', font_size=6, arrows=True)
+        nx.draw(G, pos, with_labels=True, node_size=1000, node_color='lightblue', font_size=7, arrows=True)
         plt.title("Tree Visualization by Levels")
         plt.show()
 

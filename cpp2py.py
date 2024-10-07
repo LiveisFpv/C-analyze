@@ -27,26 +27,21 @@ class analysis_c_code():
     def __init__(self):
         self.analyze_results ={"preprocess":[],
                                "identificators":[],
-                               "keywords":{
-                                   
-                               },
+                               "keywords":[],
                                "delimiters":{
-                                   
                                },
-                               "operators":{
-                                   
-                               },
+                               "operators":[],
                                "literals":[],
                                "comments":[]}
         for delimiter in self.__delimiters["delimiters"]:
             self.analyze_results["delimiters"][delimiter]=[]
-        for operator_len in self.__operators:
-            for operator_type in self.__operators[operator_len]:
-                for operator in self.__operators[operator_len][operator_type]:
-                    self.analyze_results["operators"][operator]=[]
-        for keywords in self.__keywords:
-            for keyword in self.__keywords[keywords]:
-                self.analyze_results["keywords"][keyword]=[]
+        # for operator_len in self.__operators:
+        #     for operator_type in self.__operators[operator_len]:
+        #         for operator in self.__operators[operator_len][operator_type]:
+        #             self.analyze_results["operators"][operator]=[]
+        # for keywords in self.__keywords:
+        #     for keyword in self.__keywords[keywords]:
+        #         self.analyze_results["keywords"][keyword]=[]
     
     
     def get_result(self):
@@ -213,7 +208,7 @@ class analysis_c_code():
                 while indexstart!=-1:
                     indexend = indexstart + len(keyword)
                     if len(re.findall(r'[A-Za-zА-Яа-яёЁ_]',self.file_content[indexstart-1]))==0:
-                        self.__add_to_json(type,indexstart,indexend,keyword)
+                        self.__add_to_json(type,indexstart,indexend)
                         self.file_content=self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
                     indexstart=self.file_content.find(keyword,indexend)
         pass
@@ -236,7 +231,7 @@ class analysis_c_code():
                     indexstart=self.file_content.find(operator)
                     while indexstart!=-1:
                         indexend = indexstart + len(operator)
-                        self.__add_to_json(type,indexstart,indexend,operator)
+                        self.__add_to_json(type,indexstart,indexend)
                         self.file_content=self.__replace_substring(self.file_content,indexstart,indexend," "*(indexend-indexstart))
                         indexstart=self.file_content.find(operator,indexend)
     
