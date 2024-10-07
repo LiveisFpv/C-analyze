@@ -21,7 +21,10 @@ class Tree:
     def add_child(self, tree):
         if self.children is None:
             self.children = []
-        self.children.append(tree)
+        if tree.index_start == self.index_start and tree.index_end == self.index_end:
+            pass
+        else:
+            self.children.append(tree)
 
     def __str__(self) -> str:
         return self.root
@@ -40,6 +43,8 @@ class indexTree(cpp2py.analysis_c_code):
         RIGHT=3
     with open("operators.json", "r") as file:
         __operators=json.load(file)
+    with open("keywords.json", "r") as file:
+        __keywords=json.load(file)
     # Конструктор для создания дерева индексации
     def __init__(self, string=None, filepath=None):
         super().__init__()
@@ -68,6 +73,7 @@ class indexTree(cpp2py.analysis_c_code):
                 else:
                     self.__create_index_list(json[type],Type)
         else:
+            json.sort(key = lambda x: x[0])
             for value in json:
                 self.__index_list.append([value[0],value[1],Type])
             
@@ -80,17 +86,19 @@ class indexTree(cpp2py.analysis_c_code):
 
     def analyze_index_json(self):
         """Запускает анализ JSON-файла и строит дерево программы"""
-        self.__build_tree_delimiter(["{", "}"])
+        self.__build_tree_identificators()
         self.__build_tree_keywords()
+        self.__build_tree_delimiter(["{", "}"])
         self.__build_tree_delimiter(["(", ")"])
         self.__build_tree_operators()
         self.__build_tree_delimiter(["[", "]"])
-        self.__build_tree_identificators()
+        self.__build_tree_keywords(type=1)
+        self.__build_tree_identificators("")
         self.__build_tree_literals()
 
     def __get_node(self, index):
-        tree = self.__tree
         """Вспомогательный метод для поиска узла по индексу"""
+        tree = self.__tree
         if tree.children is None:
             return None
         length=len(tree.children)
@@ -105,45 +113,6 @@ class indexTree(cpp2py.analysis_c_code):
             i+=1
         return tree
 
-    def __build_tree_delimiter(self, delimiter=["{", "}"]):
-        """Основной метод для разбора программы и построения дерева"""
-        delimiters = self.__index_json["delimiters"]
-        length = len(delimiters[delimiter[0]])
-        index_start = 0
-        index_end = 0
-        leafs = []
-        nodes = []
-
-        while index_start < length or index_end < length:
-            if index_start < length:
-                delimiter_start = delimiters[delimiter[0]][index_start]
-            if index_end < length:
-                delimiter_end = delimiters[delimiter[1]][index_end]
-
-            if index_start < length and delimiter_start[0] < delimiter_end[0]:
-                # Создаем узел для нового блока {}
-                leaf = Tree(delimiter[0]+delimiter[1], delimiter_start[0])
-                leafs.append(leaf)
-                index_start += 1
-            else:
-                leaf = leafs.pop()
-                leaf.index_end = delimiter_end[0]
-                index_end += 1
-                nodes.append(leaf)
-        while len(nodes) > 0:
-            node = nodes.pop()
-            parent = self.__get_node(node.index_start)
-            parent.add_child(node)
-    """
-    Ищет ключевые слова, впоследствии идентификаторам должны присвоится их типы
-    Функции должны получить тип возвращаемого значения
-    Ключевые слова по типу if, for, while зависимые блоки {} и ()
-    Также if for while будут иметь конечный индекс {}, а начальный собственный
-    """
-    def __build_tree_keywords(self):
-        keywords_list=self.__index_json["keywords"]
-        for keyword in keywords_list:
-            pass
     """
     Ищет оператор, индекс начала для оператора будет его крайний левый операнд, а конца крайний правый операнд
     В последстивие операнды станут потомками, для скобок необходима впоследствие пересборка дерева
@@ -170,6 +139,7 @@ class indexTree(cpp2py.analysis_c_code):
                             close+=1
                         if self.__index_list[left_operand][1]=="[":
                             close-=1
+                    left_operand-=1
             else:
                 if self.__index_list[left_operand][2] not in ["identificators","literals"]:
                     left_operand+=1
@@ -192,6 +162,15 @@ class indexTree(cpp2py.analysis_c_code):
                         open-=1
                     if self.__index_list[right_operand][1]=="[":
                         open+=1
+            elif self.__index_list[right_operand][1] =="{":
+                right_operand+=1
+                open=1
+                while open>0:
+                    right_operand+=1
+                    if self.__index_list[right_operand][1]=="}":
+                        open-=1
+                    if self.__index_list[right_operand][1]=="{":
+                        open+=1
             else:
                 if self.__index_list[right_operand][2]not in ["identificators","literals"]:
                     right_operand-=1
@@ -199,26 +178,139 @@ class indexTree(cpp2py.analysis_c_code):
             return None, None
         return left_operand, right_operand
 
+    def __build_tree_delimiter(self, delimiter=["{", "}"]):
+        """Основной метод для разбора программы и построения дерева"""
+        delimiters = self.__index_json["delimiters"]
+        length = len(delimiters[delimiter[0]])
+        index_start = 0
+        index_end = 0
+        leafs = []
+        nodes = []
+
+        while index_start < length or index_end < length:
+
+            if index_start < length:
+                delimiter_start = delimiters[delimiter[0]][index_start]
+
+            if index_end < length:
+                delimiter_end = delimiters[delimiter[1]][index_end]
+
+            if index_start < length and delimiter_start[0] < delimiter_end[0]:
+                # Создаем узел для нового блока {}
+                if delimiter[0] == "[":
+                    delimiter_start=self.__index_list[self.__local_index[delimiter_start[0]]-1]   
+                leaf = Tree(delimiter[0]+delimiter[1], delimiter_start[0])
+                leafs.append(leaf)
+                index_start += 1
+
+            else:
+                leaf = leafs.pop()
+                leaf.index_end = delimiter_end[0]+1
+                index_end += 1
+                nodes.append(leaf)
+
+        while len(nodes) > 0:
+            node = nodes.pop()
+            parent = self.__get_node(node.index_start)
+            parent.add_child(node)
+
+            
+    """
+    Ищет ключевые слова, впоследствии идентификаторам должны присвоится их типы
+    Функции должны получить тип возвращаемого значения
+    Ключевые слова по типу if, for, while зависимые блоки {} и ()
+    Также if for while будут иметь конечный индекс {}, а начальный собственный
+    """
+    def __build_tree_keywords(self,type=0):
+
+        func=["for", "while", "if","return"]
+        keywords_list=self.__index_json["keywords"]
+
+        if type==0:
+
+            for keyword in keywords_list:
+
+                if keyword[1]in func:
+                    left_operand, right_operand=self.__find_operand(keyword[0], self.operator_type.RIGHT)
+                    left_operand=self.__index_list[left_operand]
+                    left_delimiter=self.__index_list[right_operand+1]
+                    right_operand=self.__index_list[right_operand]
+
+                    if right_operand[1]!="}":
+                        _, right_operand=self.__find_operand(right_operand[0], self.operator_type.RIGHT)
+                        right_operand=self.__index_list[right_operand]
+                   
+                    node=Tree(keyword[1],left_operand[0],right_operand[0]+len(right_operand[1]))
+                    parent = self.__get_node(node.index_start)
+                    parent.add_child(node)
+                    if right_operand[1]=="}":
+                        node=Tree(left_delimiter[1]+right_operand[1],left_delimiter[0],right_operand[0]+len(right_operand[1]))
+                        parent = self.__get_node(node.index_start)
+                        parent.add_child(node)
+
+        else:
+
+            for keyword in keywords_list:
+
+                if keyword[1]not in func and keyword[1] not in self.__keywords["types"]:
+
+                    node = Tree(keyword[1], keyword[0], keyword[0]+len(keyword[1]))
+                    parent = self.__get_node(node.index_start)
+                    parent.add_child(node)
+
+    
+
     def __build_tree_operators(self):
+
         operators_list=self.__index_json["operators"]
+
         for operator in operators_list:
             left_operand, right_operand=self.__find_operand(operator[0], self.operator_type.LEFT_RIGHT)
             left_operand=self.__index_list[left_operand]
             right_operand=self.__index_list[right_operand]
-            node=Tree(operator[1],left_operand[0],right_operand[0])
+            node=Tree(operator[1],left_operand[0],right_operand[0]+len(right_operand[1]))
             parent = self.__get_node(node.index_start)
             parent.add_child(node)
 
-    def __build_tree_identificators(self):
+    def __build_tree_identificators(self,type="function"):
+
         identificators=self.__index_json["identificators"]
+
         for identifier in identificators:
-            node = Tree(identifier[1], identifier[0], identifier[0])
-            parent = self.__get_node(node.index_start)
-            parent.add_child(node)
+
+            if type=="function":
+                left_operand, right_operand=self.__find_operand(identifier[0], self.operator_type.RIGHT)
+                left_operand=self.__index_list[left_operand]
+                left_delimiter=self.__index_list[right_operand+1]
+                right_operand=self.__index_list[right_operand]
+                if right_operand[1]!=")":
+                    continue
+                if right_operand[1]!="}":
+                    _, right_operand=self.__find_operand(right_operand[0], self.operator_type.RIGHT)
+                    right_operand=self.__index_list[right_operand]
+                node=Tree(identifier[1],left_operand[0],right_operand[0]+len(right_operand[1]))
+                parent = self.__get_node(node.index_start)
+                parent.add_child(node)
+                node=Tree(left_delimiter[1]+right_operand[1],left_delimiter[0],right_operand[0]+len(right_operand[1]))
+                parent = self.__get_node(node.index_start)
+                parent.add_child(node)
+            
+            else:
+                left_operand, right_operand=self.__find_operand(identifier[0], self.operator_type.RIGHT)
+                left_operand=self.__index_list[left_operand]
+                right_operand=self.__index_list[right_operand]
+                if right_operand[1]==")":
+                    continue
+                node = Tree(identifier[1], identifier[0], identifier[0]+len(identifier[1]))
+                parent = self.__get_node(node.index_start)
+                parent.add_child(node)
+    
     def __build_tree_literals(self):
+
         identificators=self.__index_json["literals"]
+
         for identifier in identificators:
-            node = Tree(identifier[1], identifier[0], identifier[0])
+            node = Tree(identifier[1], identifier[0], identifier[0]+len(identifier[1]))
             parent = self.__get_node(node.index_start)
             parent.add_child(node)
 

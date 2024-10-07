@@ -7,7 +7,7 @@
 int find_min(int *a, int length){
     int m = a[0];
     for (int i = 1; i < length;++i){
-        if (a[i] < m){
+        if ((a[i]+1) < m){
             m = a[i];
         }
     }
