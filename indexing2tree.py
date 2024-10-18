@@ -2,6 +2,8 @@ from enum import Enum
 import cpp2py
 import sys
 import matplotlib.pyplot as plt
+import pydot
+from networkx.drawing.nx_agraph import graphviz_layout
 import networkx as nx
 import json
 
@@ -25,7 +27,11 @@ class Tree:
             pass
         else:
             self.children.append(tree)
-
+    def sort_tree(self):
+        if self.children is not None:
+            self.children.sort(key = lambda x: x.index_start)
+        for child in self.children:
+            child.sort_tree()
     def __str__(self) -> str:
         return self.root
 
@@ -179,7 +185,10 @@ class indexTree(cpp2py.analysis_c_code):
                     right_operand-=1
         else:
             return None, None
-        return left_operand, right_operand
+        if left_operand==local_operator_index and self.__index_list[local_operator_index][1]=="*" and type==self.operator_type.LEFT_RIGHT:
+            return None,None
+        else:
+            return left_operand, right_operand
 
     def __build_tree_delimiter(self, delimiter:list=["{", "}"])->None:
         """Основной метод для разбора программы и построения дерева"""
@@ -271,13 +280,17 @@ class indexTree(cpp2py.analysis_c_code):
                     local_index=self.__local_index[keyword[0]]
                     comma=True
                     local_index+=1
+                    kol=0
+                    while self.__index_list[local_index][1]=="*":
+                        local_index+=1
+                        kol+=1
                     while self.__index_list[local_index][2] not in ['keywords']:
                         if self.__index_list[local_index][1]==";":
                             break
                         elif self.__index_list[local_index][2]=="identificators" and comma:
                             _,tree=self.__get_node(Tree(self.__index_list[local_index][1],self.__index_list[local_index][0],
                                                  self.__index_list[local_index][0]+len(self.__index_list[local_index][1])))
-                            tree.root=f"{keyword[1]} {tree.root}"
+                            tree.root=f"{keyword[1]+"*"*kol} {tree.root}"
                             comma=False
                         elif self.__index_list[local_index][1]==",":
                             comma=True
@@ -289,6 +302,8 @@ class indexTree(cpp2py.analysis_c_code):
 
         for operator in operators_list:
             left_operand, right_operand=self.__find_operand(operator[0], self.operator_type.LEFT_RIGHT)
+            if left_operand is None and right_operand is None:
+                continue
             left_operand=self.__index_list[left_operand]
             right_operand=self.__index_list[right_operand]
             node=Tree(operator[1],left_operand[0],right_operand[0]+len(right_operand[1]))
@@ -342,35 +357,39 @@ class indexTree(cpp2py.analysis_c_code):
             if not rebuild:
                 parent.add_child(node)
 
-    def visualize_tree_by_levels(self)->None:
+    def visualize_tree_by_levels(self) -> None: 
+        self.__tree.sort_tree()
         """Метод для визуализации дерева по уровням"""
         G = nx.DiGraph()
+        G1=nx.DiGraph()
 
         # Вспомогательная функция для добавления узлов и рёбер в граф
-        def add_edges(node, parent=None, level=0, pos={}, level_pos={}):
-            label = f"{node.root}\n{node.index_start}\n{node.index_end}"
+        def add_edges(node, parent=None, level=0):
+            #label = f"{node.root} {node.index_start} {node.index_end}"
+            label = f"{node.root}|{node.index_start}"
             G.add_node(label)
-
+            G1.add_node(label.replace("|","\n\n"))
             if parent is not None:
                 G.add_edge(parent, label)
-
-            if level not in level_pos:
-                level_pos[level] = 0
-            pos[label] = (level_pos[level], -level)
-            level_pos[level] += 1  # Увеличиваем позицию для следующего узла на этом уровне
-
+                G1.add_edge(parent.replace("|","\n\n"), label.replace("|","\n\n"))
             for child in node.children:
-                add_edges(child, label, level + 1, pos, level_pos)
+                add_edges(child, label, level + 1)
 
         # Строим граф
-        pos = {}
-        add_edges(self.__tree, pos=pos, level_pos={})
-
+        add_edges(self.__tree)
+        # Используем Graphviz для автоматической компоновки
+        pos = graphviz_layout(G,prog="dot")
+        pos1={}
+        for i in pos:
+            pos1[i.replace("|","\n\n")]=pos[i]
         # Настройка визуализации
         plt.figure(figsize=(12, 8))
-        nx.draw(G, pos, with_labels=True, node_size=1000, node_color='lightblue', font_size=7, arrows=True)
-        plt.title("Tree Visualization by Levels")
+        nx.draw(G1, pos1, with_labels=True, node_size=1500, node_color='lightgray', font_size=7, arrows=True)
+        plt.title("Tree Visualization by Levels (Centered)")
         plt.show()
+
+
+
 
 if __name__ == "__main__":
     # Создаем дерево индексации
