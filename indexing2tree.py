@@ -88,6 +88,7 @@ class indexTree(cpp2py.analysis_c_code):
         self.__build_tree_keywords(type=1)
         self.__build_tree_identificators("")
         self.__build_tree_literals()
+        self.__build_tree_keywords(type=2)
 
     def __get_node(self, node: Tree,re:bool=True)-> tuple[bool, Tree]:
         index_start=node.index_start
@@ -253,7 +254,7 @@ class indexTree(cpp2py.analysis_c_code):
                         if not rebuild:
                             parent.add_child(node)
 
-        else:
+        elif type==1:
 
             for keyword in keywords_list:
 
@@ -263,8 +264,24 @@ class indexTree(cpp2py.analysis_c_code):
                     rebuild,parent = self.__get_node(node)
                     if not rebuild:
                         parent.add_child(node)
-                else:
-                    pass
+        elif type==2:
+            for keyword in keywords_list:
+                if keyword[1] in self.__keywords["types"] :
+
+                    local_index=self.__local_index[keyword[0]]
+                    comma=True
+                    local_index+=1
+                    while self.__index_list[local_index][2] not in ['keywords']:
+                        if self.__index_list[local_index][1]==";":
+                            break
+                        elif self.__index_list[local_index][2]=="identificators" and comma:
+                            _,tree=self.__get_node(Tree(self.__index_list[local_index][1],self.__index_list[local_index][0],
+                                                 self.__index_list[local_index][0]+len(self.__index_list[local_index][1])))
+                            tree.root=f"{keyword[1]} {tree.root}"
+                            comma=False
+                        elif self.__index_list[local_index][1]==",":
+                            comma=True
+                        local_index+=1
 
     def __build_tree_operators(self)->None:
 
