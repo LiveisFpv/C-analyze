@@ -1,0 +1,190 @@
+{
+    "root": "global",
+    "index_start": 0,
+    "index_end": 105,
+    "children": [
+        {
+            "root": "int sum",
+            "index_start": 5,
+            "index_end": 44,
+            "children": [
+                {
+                    "root": "{}",
+                    "index_start": 21,
+                    "index_end": 44,
+                    "children": [
+                        {
+                            "root": "return",
+                            "index_start": 27,
+                            "index_end": 41,
+                            "children": [
+                                {
+                                    "root": "()",
+                                    "index_start": 34,
+                                    "index_end": 41,
+                                    "children": [
+                                        {
+                                            "root": "+",
+                                            "index_start": 35,
+                                            "index_end": 40,
+                                            "children": [
+                                                {
+                                                    "root": "a",
+                                                    "index_start": 35,
+                                                    "index_end": 36,
+                                                    "children": []
+                                                },
+                                                {
+                                                    "root": "b",
+                                                    "index_start": 39,
+                                                    "index_end": 40,
+                                                    "children": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "root": "()",
+                    "index_start": 8,
+                    "index_end": 21,
+                    "children": [
+                        {
+                            "root": "int a",
+                            "index_start": 13,
+                            "index_end": 14,
+                            "children": []
+                        },
+                        {
+                            "root": "int b",
+                            "index_start": 19,
+                            "index_end": 20,
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "root": "int main",
+            "index_start": 49,
+            "index_end": 104,
+            "children": [
+                {
+                    "root": "{}",
+                    "index_start": 55,
+                    "index_end": 104,
+                    "children": [
+                        {
+                            "root": "print",
+                            "index_start": 79,
+                            "index_end": 101,
+                            "children": [
+                                {
+                                    "root": "()",
+                                    "index_start": 84,
+                                    "index_end": 101,
+                                    "children": [
+                                        {
+                                            "root": "sum",
+                                            "index_start": 92,
+                                            "index_end": 100,
+                                            "children": [
+                                                {
+                                                    "root": "()",
+                                                    "index_start": 95,
+                                                    "index_end": 100,
+                                                    "children": [
+                                                        {
+                                                            "root": "a",
+                                                            "index_start": 96,
+                                                            "index_end": 97,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "root": "b",
+                                                            "index_start": 98,
+                                                            "index_end": 99,
+                                                            "children": []
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "root": "\"sum:\"",
+                                            "index_start": 85,
+                                            "index_end": 91,
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "root": "=",
+                            "index_start": 65,
+                            "index_end": 68,
+                            "children": [
+                                {
+                                    "root": "int a",
+                                    "index_start": 65,
+                                    "index_end": 66,
+                                    "children": []
+                                },
+                                {
+                                    "root": "3",
+                                    "index_start": 67,
+                                    "index_end": 68,
+                                    "children": []
+                                }
+                            ]
+                        },
+                        {
+                            "root": "=",
+                            "index_start": 70,
+                            "index_end": 73,
+                            "children": [
+                                {
+                                    "root": "int b",
+                                    "index_start": 70,
+                                    "index_end": 71,
+                                    "children": []
+                                },
+                                {
+                                    "root": "5",
+                                    "index_start": 72,
+                                    "index_end": 73,
+                                    "children": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "root": "()",
+                    "index_start": 53,
+                    "index_end": 55,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "root": "main",
+            "index_start": 104,
+            "index_end": 104,
+            "children": [
+                {
+                    "root": "()",
+                    "index_start": 104,
+                    "index_end": 104,
+                    "children": []
+                }
+            ]
+        }
+    ]
+}

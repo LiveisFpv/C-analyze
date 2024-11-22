@@ -47,6 +47,7 @@ class indexTree(cpp2py.analysis_c_code):
     # Конструктор для создания дерева индексации
     def __init__(self, string:str=None, filepath:str=None):
         super().__init__()
+        self.funcs=["input","print"]
         self.__tree = Tree("global")
         self.level = 0
         if filepath is not None:
@@ -54,7 +55,7 @@ class indexTree(cpp2py.analysis_c_code):
         if string is not None:
             self.run_from_string(string)
         self.__index_json = self.analyze_results
-        self.__tree.index_end = self.__index_json["delimiters"]["}"][len(self.__index_json["delimiters"]["}"])-1][0] + 1
+        self.__tree.index_end = self.__index_json["delimiters"]["}"][len(self.__index_json["delimiters"]["}"])-1][0] + 2
         self.__index_list=[]
         self.__create_index_list(self.__index_json)
         self.__index_list.sort(key = lambda x: x[0])
@@ -95,6 +96,7 @@ class indexTree(cpp2py.analysis_c_code):
         self.__build_tree_identificators("")
         self.__build_tree_literals()
         self.__build_tree_keywords(type=2)
+        self.__tree.children.append(Tree("main",self.__tree.index_end-1,self.__tree.index_end-1,[Tree("()",self.__tree.index_end-1,self.__tree.index_end-1,[])]))
 
     def __get_node(self, node: Tree,re:bool=True)-> tuple[bool, Tree]:
         index_start=node.index_start
@@ -285,12 +287,12 @@ class indexTree(cpp2py.analysis_c_code):
                         local_index+=1
                         kol+=1
                     while self.__index_list[local_index][2] not in ['keywords']:
-                        if self.__index_list[local_index][1]==";":
+                        if self.__index_list[local_index][1]in[";","{"]:
                             break
                         elif self.__index_list[local_index][2]=="identificators" and comma:
                             _,tree=self.__get_node(Tree(self.__index_list[local_index][1],self.__index_list[local_index][0],
                                                  self.__index_list[local_index][0]+len(self.__index_list[local_index][1])))
-                            tree.root=f"{keyword[1]+"*"*kol} {tree.root}"
+                            tree.root=f"{keyword[1]+'*'*kol} {tree.root}"
                             comma=False
                         elif self.__index_list[local_index][1]==",":
                             comma=True
@@ -316,13 +318,20 @@ class indexTree(cpp2py.analysis_c_code):
         identificators=self.__index_json["identificators"]
 
         for identifier in identificators:
-
+            
             if type=="function":
                 left_operand, right_operand=self.__find_operand(identifier[0], self.operator_type.RIGHT)
+                l_b=self.__index_list[left_operand+1]
                 left_operand=self.__index_list[left_operand]
                 left_delimiter=self.__index_list[right_operand+1]
                 right_operand=self.__index_list[right_operand]
                 if right_operand[1]!=")":
+                    continue
+                if identifier[1] in self.funcs:
+                    node=Tree(identifier[1],left_operand[0],right_operand[0]+len(right_operand[1]),[Tree("()",l_b[0],right_operand[0]+1)])
+                    rebuild,parent = self.__get_node(node)
+                    if not rebuild:
+                        parent.add_child(node)
                     continue
                 if right_operand[1]!="}":
                     _, right_operand=self.__find_operand(right_operand[0], self.operator_type.RIGHT)
@@ -335,6 +344,7 @@ class indexTree(cpp2py.analysis_c_code):
                 rebuild,parent = self.__get_node(node)
                 if not rebuild:
                     parent.add_child(node)
+                self.funcs.append(identifier[1])
             
             else:
                 left_operand, right_operand=self.__find_operand(identifier[0], self.operator_type.RIGHT)
@@ -387,6 +397,22 @@ class indexTree(cpp2py.analysis_c_code):
         nx.draw(G1, pos1, with_labels=True, node_size=1500, node_color='lightgray', font_size=7, arrows=True)
         plt.title("Tree Visualization by Levels (Centered)")
         plt.show()
+    def print_tree(self):
+        print(self.__tree)
+    def tree_to_dict(self,node):
+        """Преобразование дерева в словарь."""
+        return {
+            "root": node.root,
+            "index_start": node.index_start,
+            "index_end": node.index_end,
+            "children": [self.tree_to_dict(child) for child in node.children],
+        }
+
+    def save_tree_to_json(self, filepath):
+        """Сохранение дерева в JSON файл."""
+        tree_dict = self.tree_to_dict(self.__tree)
+        with open(filepath, "w", encoding="utf-8") as file:
+            json.dump(tree_dict, file, indent=4, ensure_ascii=False)
 
 
 
@@ -395,4 +421,6 @@ if __name__ == "__main__":
     # Создаем дерево индексации
     tree = indexTree(filepath="test.cpp")
     tree.analyze_index_json()
+    tree.save_tree_to_json("tree.json")
     tree.visualize_tree_by_levels()
+    
