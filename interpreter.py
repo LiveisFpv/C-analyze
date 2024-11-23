@@ -36,22 +36,43 @@ class Interpreter:
 
         if node.root == "input":
             # Читаем строку от пользователя
-            prompt = self.execute(node.children[0]) if node.children else ""
-            user_input = input(prompt)
-            try:
-                # Пробуем преобразовать ввод в число
-                return int(user_input) if user_input.isdigit() else float(user_input)
-            except ValueError:
-                # Возвращаем как строку, если не число
-                return user_input
-        
+            for inp in node.children[0].children:
+                user_input = input()
+                try:
+                    # Пробуем преобразовать ввод в число
+                    self.variables[inp.root]=int(user_input) if user_input.isdigit() else float(user_input)
+                except ValueError:
+                    # Возвращаем как строку, если не число
+                    self.variables[inp.root] = f"\"{user_input}\""
+            return None
+            # prompt = self.execute(node.children[0]) if node.children[0] else ""
+            # user_input = input(prompt)
+            
         # Определение функций
-        if node.root.startswith("int") or node.root.startswith("void") or node.root.startswith("float"):
+        if node.root.startswith("int") or node.root.startswith("void") or node.root.startswith("float") or node.root.startswith("string") or node.root.startswith("bool"):
             # Проверяем, есть ли параметры и тело
             if len(node.children) == 2 and node.children[0].root == "()" and node.children[1].root == "{}":
                 func_name = node.root.split()[1]  # Название функции
                 self.functions[func_name] = node  # Сохраняем узел функции
                 return None
+            # Инициализируем переменные
+            else:
+                if node.root.startswith("int"):
+                    var_name = node.root.split()[1]
+                    self.variables[var_name] = 0
+                    return None
+                elif node.root.startswith("float"):
+                    var_name = node.root.split()[1]
+                    self.variables[var_name] = 0.0
+                    return None
+                elif node.root.startswith("string"):
+                    var_name = node.root.split()[1]
+                    self.variables[var_name] = "\"\""
+                    return None
+                elif node.root.startswith("bool"):
+                    var_name = node.root.split()[1]
+                    self.variables[var_name] = False
+                    return None
 
         # Вызов функции
         if node.root in self.functions:
