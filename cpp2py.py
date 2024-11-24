@@ -119,7 +119,7 @@ class analysis_c_code():
         with open(self.file_path_output.replace(".txt",".json"), 'w', encoding='utf-8') as file:
             json.dump(self.analyze_results, file, ensure_ascii=False, indent=4)  # Используем параметры для форматирования и кодировки
         json_string = json.dumps(self.analyze_results, ensure_ascii=False, indent=4)
-        print(json_string)
+        # print(json_string)
 
     #Просто запись в файл, больше и сказать нечего
     def _write_file(self,output):

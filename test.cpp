@@ -11,6 +11,7 @@ void op(int a,int b){
     }
 }
 int main(){
+    int mas[10];
     int a, b;
     input(a);
     input(b);
@@ -37,5 +38,9 @@ int main(){
     }
     for(int i=0; i<10; i+=1){
         print("i: ",i);
+        mas[i]=(i*2);
+    }
+    for(int i=0; i<10; i+=1){
+        print("mas[",i,"]:",mas[i]);
     }
 }

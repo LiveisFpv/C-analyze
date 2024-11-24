@@ -1,3 +1,4 @@
+
 class Interpreter:
     def __init__(self, syntax_tree):
         """
@@ -173,15 +174,25 @@ class Interpreter:
         # Присваивание
         if node.root == "=":
             var_name = node.children[0].root
-            value = self.execute(node.children[1])
-            self.variables[var_name.split()[1]] = value
+            if var_name == "[]":
+                value = self.execute(node.children[1])
+                index = self.execute(node.children[0].children[1])
+                self.variables[node.children[0].children[0].root][index] = value
+            else:
+                value = self.execute(node.children[1])
+                self.variables[var_name.split()[1]] = value
             return value
 
         # Массивы
         if node.root == "[]":
             array_name = node.children[0].root
-            index = self.execute(node.children[1])
-            return self.variables[array_name][index]
+            if len(array_name.split())>1:
+                array_name = array_name.split()[1]
+                self.variables[array_name] = [None] * self.execute(node.children[1])
+                return None
+            else:
+                index = self.execute(node.children[1])
+                return self.variables[array_name][index]
 
         if node.root == "[]=":
             array_name = node.children[0].root
@@ -240,8 +251,14 @@ class ReturnValue:
 if __name__ == "__main__":
     import json
     import indexing2tree
-
-    # Подгружаем дерево из JSON (пример с вашим деревом)
+    from indexing2tree import indexTree
+    tree = indexTree(filepath="test.cpp")
+    tree.analyze_index_json()
+    tree.save_tree_to_json("tree.json")
+    print("\n")
+    print("-"*30)
+    print("\n")
+    # Подгружаем дерево из JSON
     with open("tree.json", "r") as file:
         tree_data = json.load(file)
 

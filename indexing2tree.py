@@ -62,8 +62,8 @@ class indexTree(cpp2py.analysis_c_code):
         self.__index_list.sort(key = lambda x: x[0])
         self.__local_index={}
         self.__create_local_index()
-        print(self.__index_list)
-        print(self.__local_index)
+        # print(self.__index_list)
+        # print(self.__local_index)
     
     #Для поиска левых и правых операндов
     def __create_index_list(self,json:dict,Type:str|None=None)-> None:
@@ -111,6 +111,8 @@ class indexTree(cpp2py.analysis_c_code):
         i=0
         while i < length:
             child=tree.children[i]
+            if child.index_start == index_start and child.index_end == index_end and child.root==node.root:
+                return False,child
             if (child.index_start <= index_start) and (index_start <= child.index_end):
                 if index_end <= child.index_end:
                     tree = child
@@ -123,6 +125,11 @@ class indexTree(cpp2py.analysis_c_code):
                         tree.children[i] = node
                         return True, None
                 continue
+            elif (child.index_start>index_start) and (child.index_end<=index_end):
+                if re==True:
+                    node.add_child(child)
+                    tree.children[i]=node
+                    return True, None
             i+=1
         return False, tree
 
@@ -440,5 +447,5 @@ if __name__ == "__main__":
     tree = indexTree(filepath="test.cpp")
     tree.analyze_index_json()
     tree.save_tree_to_json("tree.json")
-    # tree.visualize_tree_by_levels()
+    tree.visualize_tree_by_levels()
     
