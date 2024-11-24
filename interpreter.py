@@ -35,7 +35,7 @@ class Interpreter:
         # Оператор возврата
         if node.root == "return":
             return ReturnValue(self.execute(node.children[0]))
-        # Арифметические операции в скобках
+        
         
         # Операторы ввода/вывода
         if node.root == "print":
@@ -203,6 +203,7 @@ class Interpreter:
         # Строковые константы
         if node.root.startswith('"') and node.root.endswith('"'):
             return node.root.strip('"')
+        # Арифметические операции в скобках
         if node.root == "()":
             # Выполняем содержимое скобок
             if len(node.children) == 1:
