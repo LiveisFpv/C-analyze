@@ -1,7 +1,7 @@
 {
     "root": "global",
     "index_start": 0,
-    "index_end": 932,
+    "index_end": 1042,
     "children": [
         {
             "root": "int sum",
@@ -72,37 +72,37 @@
         {
             "root": "void op",
             "index_start": 50,
-            "index_end": 177,
+            "index_end": 181,
             "children": [
                 {
                     "root": "{}",
                     "index_start": 65,
-                    "index_end": 177,
+                    "index_end": 181,
                     "children": [
                         {
                             "root": "if",
                             "index_start": 71,
-                            "index_end": 118,
+                            "index_end": 120,
                             "children": [
                                 {
                                     "root": "{}",
                                     "index_start": 79,
-                                    "index_end": 118,
+                                    "index_end": 120,
                                     "children": [
                                         {
                                             "root": "print",
                                             "index_start": 89,
-                                            "index_end": 111,
+                                            "index_end": 113,
                                             "children": [
                                                 {
                                                     "root": "()",
                                                     "index_start": 94,
-                                                    "index_end": 111,
+                                                    "index_end": 113,
                                                     "children": [
                                                         {
-                                                            "root": "\"a less than b\"",
+                                                            "root": "\"a less than b\\n\"",
                                                             "index_start": 95,
-                                                            "index_end": 110,
+                                                            "index_end": 112,
                                                             "children": []
                                                         }
                                                     ]
@@ -141,28 +141,28 @@
                         },
                         {
                             "root": "else",
-                            "index_start": 123,
-                            "index_end": 175,
+                            "index_start": 125,
+                            "index_end": 179,
                             "children": [
                                 {
                                     "root": "{}",
-                                    "index_start": 127,
-                                    "index_end": 175,
+                                    "index_start": 129,
+                                    "index_end": 179,
                                     "children": [
                                         {
                                             "root": "print",
-                                            "index_start": 137,
-                                            "index_end": 168,
+                                            "index_start": 139,
+                                            "index_end": 172,
                                             "children": [
                                                 {
                                                     "root": "()",
-                                                    "index_start": 142,
-                                                    "index_end": 168,
+                                                    "index_start": 144,
+                                                    "index_end": 172,
                                                     "children": [
                                                         {
-                                                            "root": "\"a more or equal than b\"",
-                                                            "index_start": 143,
-                                                            "index_end": 167,
+                                                            "root": "\"a more or equal than b\\n\"",
+                                                            "index_start": 145,
+                                                            "index_end": 171,
                                                             "children": []
                                                         }
                                                     ]
@@ -198,44 +198,50 @@
         },
         {
             "root": "int main",
-            "index_start": 182,
-            "index_end": 931,
+            "index_start": 186,
+            "index_end": 1041,
             "children": [
                 {
                     "root": "{}",
-                    "index_start": 188,
-                    "index_end": 931,
+                    "index_start": 192,
+                    "index_end": 1041,
                     "children": [
                         {
                             "root": "while",
-                            "index_start": 713,
-                            "index_end": 774,
+                            "index_start": 807,
+                            "index_end": 873,
                             "children": [
                                 {
                                     "root": "{}",
-                                    "index_start": 729,
-                                    "index_end": 774,
+                                    "index_start": 823,
+                                    "index_end": 873,
                                     "children": [
                                         {
                                             "root": "print",
-                                            "index_start": 753,
-                                            "index_end": 767,
+                                            "index_start": 847,
+                                            "index_end": 866,
                                             "children": [
                                                 {
                                                     "root": "()",
-                                                    "index_start": 758,
-                                                    "index_end": 767,
+                                                    "index_start": 852,
+                                                    "index_end": 866,
                                                     "children": [
                                                         {
                                                             "root": "a",
-                                                            "index_start": 765,
-                                                            "index_end": 766,
+                                                            "index_start": 859,
+                                                            "index_end": 860,
                                                             "children": []
                                                         },
                                                         {
                                                             "root": "\"a: \"",
-                                                            "index_start": 759,
-                                                            "index_end": 764,
+                                                            "index_start": 853,
+                                                            "index_end": 858,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "root": "\"\\n\"",
+                                                            "index_start": 861,
+                                                            "index_end": 865,
                                                             "children": []
                                                         }
                                                     ]
@@ -244,19 +250,19 @@
                                         },
                                         {
                                             "root": "+=",
-                                            "index_start": 739,
-                                            "index_end": 743,
+                                            "index_start": 833,
+                                            "index_end": 837,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 739,
-                                                    "index_end": 740,
+                                                    "index_start": 833,
+                                                    "index_end": 834,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "1",
-                                                    "index_start": 742,
-                                                    "index_end": 743,
+                                                    "index_start": 836,
+                                                    "index_end": 837,
                                                     "children": []
                                                 }
                                             ]
@@ -265,24 +271,24 @@
                                 },
                                 {
                                     "root": "()",
-                                    "index_start": 719,
-                                    "index_end": 724,
+                                    "index_start": 813,
+                                    "index_end": 818,
                                     "children": [
                                         {
                                             "root": "<",
-                                            "index_start": 720,
-                                            "index_end": 723,
+                                            "index_start": 814,
+                                            "index_end": 817,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 720,
-                                                    "index_end": 721,
+                                                    "index_start": 814,
+                                                    "index_end": 815,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 722,
-                                                    "index_end": 723,
+                                                    "index_start": 816,
+                                                    "index_end": 817,
                                                     "children": []
                                                 }
                                             ]
@@ -293,34 +299,40 @@
                         },
                         {
                             "root": "for",
-                            "index_start": 779,
-                            "index_end": 856,
+                            "index_start": 878,
+                            "index_end": 960,
                             "children": [
                                 {
                                     "root": "{}",
-                                    "index_start": 803,
-                                    "index_end": 856,
+                                    "index_start": 902,
+                                    "index_end": 960,
                                     "children": [
                                         {
                                             "root": "print",
-                                            "index_start": 813,
-                                            "index_end": 827,
+                                            "index_start": 912,
+                                            "index_end": 931,
                                             "children": [
                                                 {
                                                     "root": "()",
-                                                    "index_start": 818,
-                                                    "index_end": 827,
+                                                    "index_start": 917,
+                                                    "index_end": 931,
                                                     "children": [
                                                         {
                                                             "root": "i",
-                                                            "index_start": 825,
-                                                            "index_end": 826,
+                                                            "index_start": 924,
+                                                            "index_end": 925,
                                                             "children": []
                                                         },
                                                         {
                                                             "root": "\"i: \"",
-                                                            "index_start": 819,
-                                                            "index_end": 824,
+                                                            "index_start": 918,
+                                                            "index_end": 923,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "root": "\"\\n\"",
+                                                            "index_start": 926,
+                                                            "index_end": 930,
                                                             "children": []
                                                         }
                                                     ]
@@ -329,29 +341,29 @@
                                         },
                                         {
                                             "root": "=",
-                                            "index_start": 837,
-                                            "index_end": 849,
+                                            "index_start": 941,
+                                            "index_end": 953,
                                             "children": [
                                                 {
                                                     "root": "()",
-                                                    "index_start": 844,
-                                                    "index_end": 849,
+                                                    "index_start": 948,
+                                                    "index_end": 953,
                                                     "children": [
                                                         {
                                                             "root": "*",
-                                                            "index_start": 845,
-                                                            "index_end": 848,
+                                                            "index_start": 949,
+                                                            "index_end": 952,
                                                             "children": [
                                                                 {
                                                                     "root": "i",
-                                                                    "index_start": 845,
-                                                                    "index_end": 846,
+                                                                    "index_start": 949,
+                                                                    "index_end": 950,
                                                                     "children": []
                                                                 },
                                                                 {
                                                                     "root": "2",
-                                                                    "index_start": 847,
-                                                                    "index_end": 848,
+                                                                    "index_start": 951,
+                                                                    "index_end": 952,
                                                                     "children": []
                                                                 }
                                                             ]
@@ -360,19 +372,19 @@
                                                 },
                                                 {
                                                     "root": "[]",
-                                                    "index_start": 837,
-                                                    "index_end": 843,
+                                                    "index_start": 941,
+                                                    "index_end": 947,
                                                     "children": [
                                                         {
                                                             "root": "mas",
-                                                            "index_start": 837,
-                                                            "index_end": 840,
+                                                            "index_start": 941,
+                                                            "index_end": 944,
                                                             "children": []
                                                         },
                                                         {
                                                             "root": "i",
-                                                            "index_start": 841,
-                                                            "index_end": 842,
+                                                            "index_start": 945,
+                                                            "index_end": 946,
                                                             "children": []
                                                         }
                                                     ]
@@ -383,62 +395,62 @@
                                 },
                                 {
                                     "root": "()",
-                                    "index_start": 782,
-                                    "index_end": 803,
+                                    "index_start": 881,
+                                    "index_end": 902,
                                     "children": [
                                         {
                                             "root": "=",
-                                            "index_start": 787,
-                                            "index_end": 790,
+                                            "index_start": 886,
+                                            "index_end": 889,
                                             "children": [
                                                 {
                                                     "root": "int i",
-                                                    "index_start": 787,
-                                                    "index_end": 788,
+                                                    "index_start": 886,
+                                                    "index_end": 887,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "0",
-                                                    "index_start": 789,
-                                                    "index_end": 790,
+                                                    "index_start": 888,
+                                                    "index_end": 889,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
                                             "root": "<",
-                                            "index_start": 792,
-                                            "index_end": 796,
+                                            "index_start": 891,
+                                            "index_end": 895,
                                             "children": [
                                                 {
                                                     "root": "i",
-                                                    "index_start": 792,
-                                                    "index_end": 793,
+                                                    "index_start": 891,
+                                                    "index_end": 892,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "10",
-                                                    "index_start": 794,
-                                                    "index_end": 796,
+                                                    "index_start": 893,
+                                                    "index_end": 895,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
                                             "root": "+=",
-                                            "index_start": 798,
-                                            "index_end": 802,
+                                            "index_start": 897,
+                                            "index_end": 901,
                                             "children": [
                                                 {
                                                     "root": "i",
-                                                    "index_start": 798,
-                                                    "index_end": 799,
+                                                    "index_start": 897,
+                                                    "index_end": 898,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "1",
-                                                    "index_start": 801,
-                                                    "index_end": 802,
+                                                    "index_start": 900,
+                                                    "index_end": 901,
                                                     "children": []
                                                 }
                                             ]
@@ -449,59 +461,65 @@
                         },
                         {
                             "root": "for",
-                            "index_start": 861,
-                            "index_end": 929,
+                            "index_start": 965,
+                            "index_end": 1039,
                             "children": [
                                 {
                                     "root": "{}",
-                                    "index_start": 885,
-                                    "index_end": 929,
+                                    "index_start": 989,
+                                    "index_end": 1039,
                                     "children": [
                                         {
                                             "root": "print",
-                                            "index_start": 895,
-                                            "index_end": 922,
+                                            "index_start": 999,
+                                            "index_end": 1032,
                                             "children": [
                                                 {
                                                     "root": "()",
-                                                    "index_start": 900,
-                                                    "index_end": 922,
+                                                    "index_start": 1004,
+                                                    "index_end": 1032,
                                                     "children": [
                                                         {
                                                             "root": "[]",
-                                                            "index_start": 915,
-                                                            "index_end": 921,
+                                                            "index_start": 1020,
+                                                            "index_end": 1026,
                                                             "children": [
                                                                 {
                                                                     "root": "mas",
-                                                                    "index_start": 915,
-                                                                    "index_end": 918,
+                                                                    "index_start": 1020,
+                                                                    "index_end": 1023,
                                                                     "children": []
                                                                 },
                                                                 {
                                                                     "root": "i",
-                                                                    "index_start": 919,
-                                                                    "index_end": 920,
+                                                                    "index_start": 1024,
+                                                                    "index_end": 1025,
                                                                     "children": []
                                                                 }
                                                             ]
                                                         },
                                                         {
                                                             "root": "i",
-                                                            "index_start": 908,
-                                                            "index_end": 909,
+                                                            "index_start": 1012,
+                                                            "index_end": 1013,
                                                             "children": []
                                                         },
                                                         {
                                                             "root": "\"mas[\"",
-                                                            "index_start": 901,
-                                                            "index_end": 907,
+                                                            "index_start": 1005,
+                                                            "index_end": 1011,
                                                             "children": []
                                                         },
                                                         {
-                                                            "root": "\"]:\"",
-                                                            "index_start": 910,
-                                                            "index_end": 914,
+                                                            "root": "\"]: \"",
+                                                            "index_start": 1014,
+                                                            "index_end": 1019,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "root": "\"\\n\"",
+                                                            "index_start": 1027,
+                                                            "index_end": 1031,
                                                             "children": []
                                                         }
                                                     ]
@@ -512,62 +530,62 @@
                                 },
                                 {
                                     "root": "()",
-                                    "index_start": 864,
-                                    "index_end": 885,
+                                    "index_start": 968,
+                                    "index_end": 989,
                                     "children": [
                                         {
                                             "root": "=",
-                                            "index_start": 869,
-                                            "index_end": 872,
+                                            "index_start": 973,
+                                            "index_end": 976,
                                             "children": [
                                                 {
                                                     "root": "int i",
-                                                    "index_start": 869,
-                                                    "index_end": 870,
+                                                    "index_start": 973,
+                                                    "index_end": 974,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "0",
-                                                    "index_start": 871,
-                                                    "index_end": 872,
+                                                    "index_start": 975,
+                                                    "index_end": 976,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
                                             "root": "<",
-                                            "index_start": 874,
-                                            "index_end": 878,
+                                            "index_start": 978,
+                                            "index_end": 982,
                                             "children": [
                                                 {
                                                     "root": "i",
-                                                    "index_start": 874,
-                                                    "index_end": 875,
+                                                    "index_start": 978,
+                                                    "index_end": 979,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "10",
-                                                    "index_start": 876,
-                                                    "index_end": 878,
+                                                    "index_start": 980,
+                                                    "index_end": 982,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
                                             "root": "+=",
-                                            "index_start": 880,
-                                            "index_end": 884,
+                                            "index_start": 984,
+                                            "index_end": 988,
                                             "children": [
                                                 {
                                                     "root": "i",
-                                                    "index_start": 880,
-                                                    "index_end": 881,
+                                                    "index_start": 984,
+                                                    "index_end": 985,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "1",
-                                                    "index_start": 883,
-                                                    "index_end": 884,
+                                                    "index_start": 987,
+                                                    "index_end": 988,
                                                     "children": []
                                                 }
                                             ]
@@ -578,18 +596,18 @@
                         },
                         {
                             "root": "input",
-                            "index_start": 225,
-                            "index_end": 233,
+                            "index_start": 229,
+                            "index_end": 237,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 230,
-                                    "index_end": 233,
+                                    "index_start": 234,
+                                    "index_end": 237,
                                     "children": [
                                         {
                                             "root": "a",
-                                            "index_start": 231,
-                                            "index_end": 232,
+                                            "index_start": 235,
+                                            "index_end": 236,
                                             "children": []
                                         }
                                     ]
@@ -598,18 +616,18 @@
                         },
                         {
                             "root": "input",
-                            "index_start": 239,
-                            "index_end": 247,
+                            "index_start": 243,
+                            "index_end": 251,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 244,
-                                    "index_end": 247,
+                                    "index_start": 248,
+                                    "index_end": 251,
                                     "children": [
                                         {
                                             "root": "b",
-                                            "index_start": 245,
-                                            "index_end": 246,
+                                            "index_start": 249,
+                                            "index_end": 250,
                                             "children": []
                                         }
                                     ]
@@ -618,34 +636,34 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 253,
-                            "index_end": 275,
+                            "index_start": 257,
+                            "index_end": 285,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 258,
-                                    "index_end": 275,
+                                    "index_start": 262,
+                                    "index_end": 285,
                                     "children": [
                                         {
                                             "root": "sum",
-                                            "index_start": 266,
-                                            "index_end": 274,
+                                            "index_start": 271,
+                                            "index_end": 279,
                                             "children": [
                                                 {
                                                     "root": "()",
-                                                    "index_start": 269,
-                                                    "index_end": 274,
+                                                    "index_start": 274,
+                                                    "index_end": 279,
                                                     "children": [
                                                         {
                                                             "root": "a",
-                                                            "index_start": 270,
-                                                            "index_end": 271,
+                                                            "index_start": 275,
+                                                            "index_end": 276,
                                                             "children": []
                                                         },
                                                         {
                                                             "root": "b",
-                                                            "index_start": 272,
-                                                            "index_end": 273,
+                                                            "index_start": 277,
+                                                            "index_end": 278,
                                                             "children": []
                                                         }
                                                     ]
@@ -653,9 +671,15 @@
                                             ]
                                         },
                                         {
-                                            "root": "\"sum:\"",
-                                            "index_start": 259,
-                                            "index_end": 265,
+                                            "root": "\"sum: \"",
+                                            "index_start": 263,
+                                            "index_end": 270,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 280,
+                                            "index_end": 284,
                                             "children": []
                                         }
                                     ]
@@ -664,37 +688,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 281,
-                            "index_end": 303,
+                            "index_start": 291,
+                            "index_end": 319,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 286,
-                                    "index_end": 303,
+                                    "index_start": 296,
+                                    "index_end": 319,
                                     "children": [
                                         {
                                             "root": "-",
-                                            "index_start": 299,
-                                            "index_end": 302,
+                                            "index_start": 310,
+                                            "index_end": 313,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 299,
-                                                    "index_end": 300,
+                                                    "index_start": 310,
+                                                    "index_end": 311,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 301,
-                                                    "index_end": 302,
+                                                    "index_start": 312,
+                                                    "index_end": 313,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"subtract:\"",
-                                            "index_start": 287,
-                                            "index_end": 298,
+                                            "root": "\"subtract: \"",
+                                            "index_start": 297,
+                                            "index_end": 309,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 314,
+                                            "index_end": 318,
                                             "children": []
                                         }
                                     ]
@@ -703,37 +733,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 309,
-                            "index_end": 329,
+                            "index_start": 325,
+                            "index_end": 351,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 314,
-                                    "index_end": 329,
+                                    "index_start": 330,
+                                    "index_end": 351,
                                     "children": [
                                         {
                                             "root": "/",
-                                            "index_start": 325,
-                                            "index_end": 328,
+                                            "index_start": 342,
+                                            "index_end": 345,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 325,
-                                                    "index_end": 326,
+                                                    "index_start": 342,
+                                                    "index_end": 343,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 327,
-                                                    "index_end": 328,
+                                                    "index_start": 344,
+                                                    "index_end": 345,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"divide:\"",
-                                            "index_start": 315,
-                                            "index_end": 324,
+                                            "root": "\"divide: \"",
+                                            "index_start": 331,
+                                            "index_end": 341,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 346,
+                                            "index_end": 350,
                                             "children": []
                                         }
                                     ]
@@ -742,37 +778,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 335,
-                            "index_end": 357,
+                            "index_start": 357,
+                            "index_end": 385,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 340,
-                                    "index_end": 357,
+                                    "index_start": 362,
+                                    "index_end": 385,
                                     "children": [
                                         {
                                             "root": "*",
-                                            "index_start": 353,
-                                            "index_end": 356,
+                                            "index_start": 376,
+                                            "index_end": 379,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 353,
-                                                    "index_end": 354,
+                                                    "index_start": 376,
+                                                    "index_end": 377,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 355,
-                                                    "index_end": 356,
+                                                    "index_start": 378,
+                                                    "index_end": 379,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"multiply:\"",
-                                            "index_start": 341,
-                                            "index_end": 352,
+                                            "root": "\"multiply: \"",
+                                            "index_start": 363,
+                                            "index_end": 375,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 380,
+                                            "index_end": 384,
                                             "children": []
                                         }
                                     ]
@@ -781,37 +823,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 363,
-                            "index_end": 386,
+                            "index_start": 391,
+                            "index_end": 420,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 368,
-                                    "index_end": 386,
+                                    "index_start": 396,
+                                    "index_end": 420,
                                     "children": [
                                         {
                                             "root": "%",
-                                            "index_start": 382,
-                                            "index_end": 385,
+                                            "index_start": 411,
+                                            "index_end": 414,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 382,
-                                                    "index_end": 383,
+                                                    "index_start": 411,
+                                                    "index_end": 412,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 384,
-                                                    "index_end": 385,
+                                                    "index_start": 413,
+                                                    "index_end": 414,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"remainder:\"",
-                                            "index_start": 369,
-                                            "index_end": 381,
+                                            "root": "\"remainder: \"",
+                                            "index_start": 397,
+                                            "index_end": 410,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 415,
+                                            "index_end": 419,
                                             "children": []
                                         }
                                     ]
@@ -820,37 +868,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 392,
-                            "index_end": 419,
+                            "index_start": 426,
+                            "index_end": 459,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 397,
-                                    "index_end": 419,
+                                    "index_start": 431,
+                                    "index_end": 459,
                                     "children": [
                                         {
                                             "root": "==",
-                                            "index_start": 412,
-                                            "index_end": 418,
+                                            "index_start": 447,
+                                            "index_end": 453,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 412,
-                                                    "index_end": 413,
+                                                    "index_start": 447,
+                                                    "index_end": 448,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 417,
-                                                    "index_end": 418,
+                                                    "index_start": 452,
+                                                    "index_end": 453,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"compare ==:\"",
-                                            "index_start": 398,
-                                            "index_end": 411,
+                                            "root": "\"compare ==: \"",
+                                            "index_start": 432,
+                                            "index_end": 446,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 454,
+                                            "index_end": 458,
                                             "children": []
                                         }
                                     ]
@@ -859,37 +913,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 425,
-                            "index_end": 452,
+                            "index_start": 465,
+                            "index_end": 498,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 430,
-                                    "index_end": 452,
+                                    "index_start": 470,
+                                    "index_end": 498,
                                     "children": [
                                         {
                                             "root": "!=",
-                                            "index_start": 445,
-                                            "index_end": 451,
+                                            "index_start": 486,
+                                            "index_end": 492,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 445,
-                                                    "index_end": 446,
+                                                    "index_start": 486,
+                                                    "index_end": 487,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 450,
-                                                    "index_end": 451,
+                                                    "index_start": 491,
+                                                    "index_end": 492,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"compare !=:\"",
-                                            "index_start": 431,
-                                            "index_end": 444,
+                                            "root": "\"compare !=: \"",
+                                            "index_start": 471,
+                                            "index_end": 485,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 493,
+                                            "index_end": 497,
                                             "children": []
                                         }
                                     ]
@@ -898,37 +958,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 458,
-                            "index_end": 483,
+                            "index_start": 504,
+                            "index_end": 535,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 463,
-                                    "index_end": 483,
+                                    "index_start": 509,
+                                    "index_end": 535,
                                     "children": [
                                         {
                                             "root": ">",
-                                            "index_start": 477,
-                                            "index_end": 482,
+                                            "index_start": 524,
+                                            "index_end": 529,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 477,
-                                                    "index_end": 478,
+                                                    "index_start": 524,
+                                                    "index_end": 525,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 481,
-                                                    "index_end": 482,
+                                                    "index_start": 528,
+                                                    "index_end": 529,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"compare >:\"",
-                                            "index_start": 464,
-                                            "index_end": 476,
+                                            "root": "\"compare >: \"",
+                                            "index_start": 510,
+                                            "index_end": 523,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 530,
+                                            "index_end": 534,
                                             "children": []
                                         }
                                     ]
@@ -937,37 +1003,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 489,
-                            "index_end": 514,
+                            "index_start": 541,
+                            "index_end": 572,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 494,
-                                    "index_end": 514,
+                                    "index_start": 546,
+                                    "index_end": 572,
                                     "children": [
                                         {
                                             "root": "<",
-                                            "index_start": 508,
-                                            "index_end": 513,
+                                            "index_start": 561,
+                                            "index_end": 566,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 508,
-                                                    "index_end": 509,
+                                                    "index_start": 561,
+                                                    "index_end": 562,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 512,
-                                                    "index_end": 513,
+                                                    "index_start": 565,
+                                                    "index_end": 566,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"compare <:\"",
-                                            "index_start": 495,
-                                            "index_end": 507,
+                                            "root": "\"compare <: \"",
+                                            "index_start": 547,
+                                            "index_end": 560,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 567,
+                                            "index_end": 571,
                                             "children": []
                                         }
                                     ]
@@ -976,37 +1048,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 520,
-                            "index_end": 547,
+                            "index_start": 578,
+                            "index_end": 611,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 525,
-                                    "index_end": 547,
+                                    "index_start": 583,
+                                    "index_end": 611,
                                     "children": [
                                         {
                                             "root": ">=",
-                                            "index_start": 540,
-                                            "index_end": 546,
+                                            "index_start": 599,
+                                            "index_end": 605,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 540,
-                                                    "index_end": 541,
+                                                    "index_start": 599,
+                                                    "index_end": 600,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 545,
-                                                    "index_end": 546,
+                                                    "index_start": 604,
+                                                    "index_end": 605,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"compare >=:\"",
-                                            "index_start": 526,
-                                            "index_end": 539,
+                                            "root": "\"compare >=: \"",
+                                            "index_start": 584,
+                                            "index_end": 598,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 606,
+                                            "index_end": 610,
                                             "children": []
                                         }
                                     ]
@@ -1015,37 +1093,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 553,
-                            "index_end": 580,
+                            "index_start": 617,
+                            "index_end": 650,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 558,
-                                    "index_end": 580,
+                                    "index_start": 622,
+                                    "index_end": 650,
                                     "children": [
                                         {
                                             "root": "<=",
-                                            "index_start": 573,
-                                            "index_end": 579,
+                                            "index_start": 638,
+                                            "index_end": 644,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 573,
-                                                    "index_end": 574,
+                                                    "index_start": 638,
+                                                    "index_end": 639,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 578,
-                                                    "index_end": 579,
+                                                    "index_start": 643,
+                                                    "index_end": 644,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"compare <=:\"",
-                                            "index_start": 559,
-                                            "index_end": 572,
+                                            "root": "\"compare <=: \"",
+                                            "index_start": 623,
+                                            "index_end": 637,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 645,
+                                            "index_end": 649,
                                             "children": []
                                         }
                                     ]
@@ -1054,31 +1138,37 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 586,
-                            "index_end": 602,
+                            "index_start": 656,
+                            "index_end": 678,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 591,
-                                    "index_end": 602,
+                                    "index_start": 661,
+                                    "index_end": 678,
                                     "children": [
                                         {
                                             "root": "!",
-                                            "index_start": 599,
-                                            "index_end": 601,
+                                            "index_start": 670,
+                                            "index_end": 672,
                                             "children": [
                                                 {
                                                     "root": "1",
-                                                    "index_start": 600,
-                                                    "index_end": 601,
+                                                    "index_start": 671,
+                                                    "index_end": 672,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"NOT:\"",
-                                            "index_start": 592,
-                                            "index_end": 598,
+                                            "root": "\"NOT: \"",
+                                            "index_start": 662,
+                                            "index_end": 669,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 673,
+                                            "index_end": 677,
                                             "children": []
                                         }
                                     ]
@@ -1087,37 +1177,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 608,
-                            "index_end": 633,
+                            "index_start": 684,
+                            "index_end": 715,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 613,
-                                    "index_end": 633,
+                                    "index_start": 689,
+                                    "index_end": 715,
                                     "children": [
                                         {
                                             "root": "&",
-                                            "index_start": 629,
-                                            "index_end": 632,
+                                            "index_start": 706,
+                                            "index_end": 709,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 629,
-                                                    "index_end": 630,
+                                                    "index_start": 706,
+                                                    "index_end": 707,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 631,
-                                                    "index_end": 632,
+                                                    "index_start": 708,
+                                                    "index_end": 709,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"bitwise AND:\"",
-                                            "index_start": 614,
-                                            "index_end": 628,
+                                            "root": "\"bitwise AND: \"",
+                                            "index_start": 690,
+                                            "index_end": 705,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 710,
+                                            "index_end": 714,
                                             "children": []
                                         }
                                     ]
@@ -1126,37 +1222,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 639,
-                            "index_end": 663,
+                            "index_start": 721,
+                            "index_end": 751,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 644,
-                                    "index_end": 663,
+                                    "index_start": 726,
+                                    "index_end": 751,
                                     "children": [
                                         {
                                             "root": "|",
-                                            "index_start": 659,
-                                            "index_end": 662,
+                                            "index_start": 742,
+                                            "index_end": 745,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 659,
-                                                    "index_end": 660,
+                                                    "index_start": 742,
+                                                    "index_end": 743,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 661,
-                                                    "index_end": 662,
+                                                    "index_start": 744,
+                                                    "index_end": 745,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"bitwise OR:\"",
-                                            "index_start": 645,
-                                            "index_end": 658,
+                                            "root": "\"bitwise OR: \"",
+                                            "index_start": 727,
+                                            "index_end": 741,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 746,
+                                            "index_end": 750,
                                             "children": []
                                         }
                                     ]
@@ -1165,37 +1267,43 @@
                         },
                         {
                             "root": "print",
-                            "index_start": 669,
-                            "index_end": 694,
+                            "index_start": 757,
+                            "index_end": 788,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 674,
-                                    "index_end": 694,
+                                    "index_start": 762,
+                                    "index_end": 788,
                                     "children": [
                                         {
                                             "root": "^",
-                                            "index_start": 690,
-                                            "index_end": 693,
+                                            "index_start": 779,
+                                            "index_end": 782,
                                             "children": [
                                                 {
                                                     "root": "a",
-                                                    "index_start": 690,
-                                                    "index_end": 691,
+                                                    "index_start": 779,
+                                                    "index_end": 780,
                                                     "children": []
                                                 },
                                                 {
                                                     "root": "b",
-                                                    "index_start": 692,
-                                                    "index_end": 693,
+                                                    "index_start": 781,
+                                                    "index_end": 782,
                                                     "children": []
                                                 }
                                             ]
                                         },
                                         {
-                                            "root": "\"bitwise XOR:\"",
-                                            "index_start": 675,
-                                            "index_end": 689,
+                                            "root": "\"bitwise XOR: \"",
+                                            "index_start": 763,
+                                            "index_end": 778,
+                                            "children": []
+                                        },
+                                        {
+                                            "root": "\"\\n\"",
+                                            "index_start": 783,
+                                            "index_end": 787,
                                             "children": []
                                         }
                                     ]
@@ -1204,24 +1312,24 @@
                         },
                         {
                             "root": "op",
-                            "index_start": 700,
-                            "index_end": 707,
+                            "index_start": 794,
+                            "index_end": 801,
                             "children": [
                                 {
                                     "root": "()",
-                                    "index_start": 702,
-                                    "index_end": 707,
+                                    "index_start": 796,
+                                    "index_end": 801,
                                     "children": [
                                         {
                                             "root": "a",
-                                            "index_start": 703,
-                                            "index_end": 704,
+                                            "index_start": 797,
+                                            "index_end": 798,
                                             "children": []
                                         },
                                         {
                                             "root": "b",
-                                            "index_start": 705,
-                                            "index_end": 706,
+                                            "index_start": 799,
+                                            "index_end": 800,
                                             "children": []
                                         }
                                     ]
@@ -1230,54 +1338,54 @@
                         },
                         {
                             "root": "[]",
-                            "index_start": 198,
-                            "index_end": 205,
+                            "index_start": 202,
+                            "index_end": 209,
                             "children": [
                                 {
                                     "root": "int mas",
-                                    "index_start": 198,
-                                    "index_end": 201,
+                                    "index_start": 202,
+                                    "index_end": 205,
                                     "children": []
                                 },
                                 {
                                     "root": "10",
-                                    "index_start": 202,
-                                    "index_end": 204,
+                                    "index_start": 206,
+                                    "index_end": 208,
                                     "children": []
                                 }
                             ]
                         },
                         {
                             "root": "int a",
-                            "index_start": 215,
-                            "index_end": 216,
+                            "index_start": 219,
+                            "index_end": 220,
                             "children": []
                         },
                         {
                             "root": "int b",
-                            "index_start": 218,
-                            "index_end": 219,
+                            "index_start": 222,
+                            "index_end": 223,
                             "children": []
                         }
                     ]
                 },
                 {
                     "root": "()",
-                    "index_start": 186,
-                    "index_end": 188,
+                    "index_start": 190,
+                    "index_end": 192,
                     "children": []
                 }
             ]
         },
         {
             "root": "main",
-            "index_start": 931,
-            "index_end": 931,
+            "index_start": 1041,
+            "index_end": 1041,
             "children": [
                 {
                     "root": "()",
-                    "index_start": 931,
-                    "index_end": 931,
+                    "index_start": 1041,
+                    "index_end": 1041,
                     "children": []
                 }
             ]

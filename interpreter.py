@@ -1,4 +1,4 @@
-
+import ast
 class Interpreter:
     def __init__(self, syntax_tree):
         """
@@ -42,7 +42,7 @@ class Interpreter:
         if node.root == "print":
             # Выводим значения параметров
             values = [self.execute(child) for child in node.children[0].children]
-            print(*values)
+            print(*values,sep="",end="")
             return None
 
         if node.root == "input":
@@ -213,7 +213,9 @@ class Interpreter:
             return int(node.root)
         # Строковые константы
         if node.root.startswith('"') and node.root.endswith('"'):
-            return node.root.strip('"')
+            
+            stripped_value = ast.literal_eval(node.root)
+            return stripped_value
         # Арифметические операции в скобках
         if node.root == "()":
             # Выполняем содержимое скобок
