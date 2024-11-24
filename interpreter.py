@@ -7,6 +7,21 @@ class Interpreter:
         self.variables = {}  # Хранилище переменных
         self.functions = {}  # Хранилище функций
 
+    def find_parent(self, tree, target):
+        """
+        Находит родительский узел для заданного узла.
+        :param tree: текущий узел дерева
+        :param target: целевой узел
+        :return: родительский узел или None
+        """
+        for child in tree.children:
+            if child is target:
+                return tree
+            parent = self.find_parent(child, target)
+            if parent:
+                return parent
+        return None
+
     def execute(self, node=None):
         """
         Рекурсивное выполнение узлов синтаксического дерева.
@@ -21,12 +36,7 @@ class Interpreter:
         if node.root == "return":
             return ReturnValue(self.execute(node.children[0]))
         # Арифметические операции в скобках
-        if node.root == "()":
-            # Выполняем содержимое скобок
-            if len(node.children) == 1:
-                return self.execute(node.children[0])
-            else:
-                raise ValueError("Скобки должны содержать только один дочерний узел.")
+        
         # Операторы ввода/вывода
         if node.root == "print":
             # Выводим значения параметров
@@ -47,7 +57,36 @@ class Interpreter:
             return None
             # prompt = self.execute(node.children[0]) if node.children[0] else ""
             # user_input = input(prompt)
-            
+        
+        # Условия
+        if node.root == "if":
+            condition = self.execute(node.children[0].children[0])  # Проверяем логическое выражение
+            if condition:
+                self.execute(node.children[1])  # Выполняем тело "if"
+                return None  # Прерываем выполнение, не проверяя "else"
+            else:
+                # Ищем узел "else" на том же уровне
+                parent_node = self.find_parent(self.tree, node)
+                if parent_node:
+                    else_index = parent_node.children.index(node) + 1
+                    if else_index < len(parent_node.children):
+                        next_node = parent_node.children[else_index]
+                        if next_node.root == "else":
+                            self.execute(next_node.children[0])  # Выполняем тело "else"
+                            return None
+        if node.root == "else":
+            return None
+        # Циклы
+        if node.root == "for":
+            self.execute(node.children[0].children[0])  # Инициализация
+            while self.execute(node.children[0].children[1]):  # Условие
+                self.execute(node.children[1])  # Тело цикла
+                self.execute(node.children[0].children[2])  # Обновление
+            return None
+        if node.root == "while":
+            while self.execute(node.children[0]):
+                self.execute(node.children[1])
+            return None
         # Определение функций
         if node.root.startswith("int") or node.root.startswith("void") or node.root.startswith("float") or node.root.startswith("string") or node.root.startswith("bool"):
             # Проверяем, есть ли параметры и тело
@@ -99,10 +138,37 @@ class Interpreter:
             return result
 
         # Арифметические и логические операции
-        if node.root in {"+", "-", "*", "/", "<", ">", "<=", ">=", "==", "!="}:
-            left = self.execute(node.children[0])
-            right = self.execute(node.children[1])
-            return eval(f"{left} {node.root} {right}")
+        if node.root in {"+","+=","-=","*=","/=", "-", "*","%", "/", "<", ">", "<=", ">=", "==", "!=", "&&", "||", "!", "^", "&", "|"}:
+            if node.root in {"!", "&&", "||"}:  # Логические операции
+                if node.root == "!":
+                    return not self.execute(node.children[0])
+                left = self.execute(node.children[0])
+                right = self.execute(node.children[1])
+                if node.root == "&&":
+                    return bool(left and right)
+                if node.root == "||":
+                    return bool(left or right)
+            elif node.root in {"&", "|", "^"}:  # Побитовые операции
+                left = self.execute(node.children[0])
+                right = self.execute(node.children[1])
+                if node.root == "&":
+                    return left & right
+                if node.root == "|":
+                    return left | right
+                if node.root == "^":
+                    return left ^ right
+            elif node.root in {"+=","-=","*=","/="}:# Синтаксический сахар
+                left = self.execute(node.children[0])
+                right = self.execute(node.children[1])
+                try:
+                    self.variables[node.children[0].root] = eval(f"{left} {node.root[0]} {right}")
+                    return self.variables[node.children[0].root]
+                except:
+                    raise NameError(f"Переменная '{node.children[0].root}' не определена")
+            else:  # Арифметические операции
+                left = self.execute(node.children[0])
+                right = self.execute(node.children[1])
+                return eval(f"{left} {node.root} {right}")
 
         # Присваивание
         if node.root == "=":
@@ -137,30 +203,17 @@ class Interpreter:
         # Строковые константы
         if node.root.startswith('"') and node.root.endswith('"'):
             return node.root.strip('"')
-
-        # Условия
-        if node.root == "if":
-            condition = self.execute(node.children[0])
-            if condition:
-                return self.execute(node.children[1])
-            elif len(node.children) > 2:  # Блок else
-                return self.execute(node.children[2])
-
-        # Циклы
-        if node.root == "for":
-            self.execute(node.children[0])  # Инициализация
-            while self.execute(node.children[1]):  # Условие
-                self.execute(node.children[3])  # Тело цикла
-                self.execute(node.children[2])  # Обновление
-
-        if node.root == "while":
-            while self.execute(node.children[0]):
-                self.execute(node.children[1])
-
+        if node.root == "()":
+            # Выполняем содержимое скобок
+            if len(node.children) == 1:
+                return self.execute(node.children[0])
+            else:
+                raise ValueError("Скобки должны содержать только один дочерний узел.")
         # Блок кода
         if node.root == "{}":
             for child in node.children:
                 self.execute(child)
+            return None
 
         
         

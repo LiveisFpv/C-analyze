@@ -48,6 +48,7 @@ class indexTree(cpp2py.analysis_c_code):
     def __init__(self, string:str=None, filepath:str=None):
         super().__init__()
         self.funcs=["input","print"]
+        self.__funcs_ind=[0,0]
         self.__tree = Tree("global")
         self.level = 0
         if filepath is not None:
@@ -89,6 +90,7 @@ class indexTree(cpp2py.analysis_c_code):
         self.__build_tree_identificators()
         self.__build_tree_keywords()
         self.__build_tree_delimiter(["{", "}"])
+        self.__build_tree_identificators("build_in_func")
         self.__build_tree_delimiter(["(", ")"])
         self.__build_tree_operators()
         self.__build_tree_delimiter(["[", "]"])
@@ -238,7 +240,7 @@ class indexTree(cpp2py.analysis_c_code):
     """
     def __build_tree_keywords(self,type:int=0)->None:
 
-        func=["for", "while", "if","return"]
+        func=["for", "while", "if","else","return"]
         keywords_list=self.__index_json["keywords"]
 
         if type==0:
@@ -247,9 +249,15 @@ class indexTree(cpp2py.analysis_c_code):
 
                 if keyword[1]in func:
                     left_operand, right_operand=self.__find_operand(keyword[0], self.operator_type.RIGHT)
-                    left_operand=self.__index_list[left_operand]
-                    left_delimiter=self.__index_list[right_operand+1]
-                    right_operand=self.__index_list[right_operand]
+                    
+                    if keyword[1]=="else":
+                        left_delimiter=self.__index_list[left_operand+1]
+                        right_operand=self.__index_list[right_operand]
+                        left_operand=self.__index_list[left_operand]
+                    else:
+                        left_operand=self.__index_list[left_operand]
+                        left_delimiter=self.__index_list[right_operand+1]
+                        right_operand=self.__index_list[right_operand]
 
                     if right_operand[1]!="}":
                         _, right_operand=self.__find_operand(right_operand[0], self.operator_type.RIGHT)
@@ -320,18 +328,14 @@ class indexTree(cpp2py.analysis_c_code):
         for identifier in identificators:
             
             if type=="function":
+                if identifier[1] in self.funcs:
+                    continue
                 left_operand, right_operand=self.__find_operand(identifier[0], self.operator_type.RIGHT)
                 l_b=self.__index_list[left_operand+1]
                 left_operand=self.__index_list[left_operand]
                 left_delimiter=self.__index_list[right_operand+1]
                 right_operand=self.__index_list[right_operand]
                 if right_operand[1]!=")":
-                    continue
-                if identifier[1] in self.funcs:
-                    node=Tree(identifier[1],left_operand[0],right_operand[0]+len(right_operand[1]),[Tree("()",l_b[0],right_operand[0]+1)])
-                    rebuild,parent = self.__get_node(node)
-                    if not rebuild:
-                        parent.add_child(node)
                     continue
                 if right_operand[1]!="}":
                     _, right_operand=self.__find_operand(right_operand[0], self.operator_type.RIGHT)
@@ -345,6 +349,20 @@ class indexTree(cpp2py.analysis_c_code):
                 if not rebuild:
                     parent.add_child(node)
                 self.funcs.append(identifier[1])
+                self.__funcs_ind.append(identifier[0])
+            
+            elif type=="build_in_func":
+                left_operand, right_operand=self.__find_operand(identifier[0], self.operator_type.RIGHT)
+                l_b=self.__index_list[left_operand+1]
+                left_operand=self.__index_list[left_operand]
+                left_delimiter=self.__index_list[right_operand+1]
+                right_operand=self.__index_list[right_operand]
+                if identifier[1] in self.funcs and identifier[0]!=self.__funcs_ind[self.funcs.index(identifier[1])]:
+                    node=Tree(identifier[1],left_operand[0],right_operand[0]+len(right_operand[1]),[Tree("()",l_b[0],right_operand[0]+1)])
+                    rebuild,parent = self.__get_node(node)
+                    if not rebuild:
+                        parent.add_child(node)
+                    continue
             
             else:
                 left_operand, right_operand=self.__find_operand(identifier[0], self.operator_type.RIGHT)
@@ -422,5 +440,5 @@ if __name__ == "__main__":
     tree = indexTree(filepath="test.cpp")
     tree.analyze_index_json()
     tree.save_tree_to_json("tree.json")
-    tree.visualize_tree_by_levels()
+    # tree.visualize_tree_by_levels()
     
