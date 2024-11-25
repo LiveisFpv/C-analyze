@@ -51,10 +51,14 @@ class Interpreter:
                 user_input = input()
                 try:
                     # Пробуем преобразовать ввод в число
-                    self.variables[inp.root]=int(user_input) if user_input.isdigit() else float(user_input)
+                    if self.variables[inp.root]["type"] == "int" and not user_input.isdigit():
+                        raise TypeError(f"Аргумент должен быть int, а получен {type(arg).__name__}")
+                    elif self.variables[inp.root]["type"] == "float" and not user_input.isde
+                    self.variables[inp.root]["value"]=int(user_input) if user_input.isdigit() else float(user_input)
+
                 except ValueError:
                     # Возвращаем как строку, если не число
-                    self.variables[inp.root] = f"\"{user_input}\""
+                    self.variables[inp.root]["value"] = f"\"{user_input}\""
             return None
             # prompt = self.execute(node.children[0]) if node.children[0] else ""
             # user_input = input(prompt)
@@ -89,30 +93,42 @@ class Interpreter:
                 self.execute(node.children[1])
             return None
         # Определение функций
-        if node.root.startswith("int") or node.root.startswith("void") or node.root.startswith("float") or node.root.startswith("string") or node.root.startswith("bool"):
+        if node.root.startswith(("int", "float", "string", "bool","void")):
             # Проверяем, есть ли параметры и тело
             if len(node.children) == 2 and node.children[0].root == "()" and node.children[1].root == "{}":
                 func_name = node.root.split()[1]  # Название функции
                 self.functions[func_name] = node  # Сохраняем узел функции
-                return None
+                return func_name
             # Инициализируем переменные
             else:
                 if node.root.startswith("int"):
                     var_name = node.root.split()[1]
-                    self.variables[var_name] = 0
-                    return None
+                    self.variables[var_name] = {
+                        "type": "int",
+                        "value": 0
+                    }
+                    return var_name
                 elif node.root.startswith("float"):
                     var_name = node.root.split()[1]
-                    self.variables[var_name] = 0.0
-                    return None
+                    self.variables[var_name] = {
+                        "type": "float",
+                        "value": 0.0
+                    }
+                    return var_name
                 elif node.root.startswith("string"):
                     var_name = node.root.split()[1]
-                    self.variables[var_name] = "\"\""
-                    return None
+                    self.variables[var_name] = {
+                        "type": "string",
+                        "value": "\"\""
+                    }
+                    return var_name
                 elif node.root.startswith("bool"):
                     var_name = node.root.split()[1]
-                    self.variables[var_name] = False
-                    return None
+                    self.variables[var_name] = {
+                        "type": "bool",
+                        "value": False
+                    }
+                    return var_name
 
         # Вызов функции
         if node.root in self.functions:
@@ -122,7 +138,25 @@ class Interpreter:
 
             # Подготавливаем локальные переменные
             args = [self.execute(arg) for arg in node.children[0].children]
-            local_vars = dict(zip([param.root.split()[1] for param in param_nodes], args))
+            if len(args)!= len(param_nodes):
+                raise ValueError(f"Неправильное количество аргументов функции '{node.root}', передано аргументов {len(args)}, ожидает {len(param_nodes)}")
+            for i in range(len(args)):
+                arg=args[i]
+                param_type = param_nodes[i].root.split()[0]
+                if param_type == "int" and not isinstance(arg, int):
+                    raise TypeError(f"Аргумент 'int' функции '{node.root}' должен быть int, а получен {type(arg).__name__}")
+                elif param_type == "float" and not isinstance(arg, (int,float)):
+                    raise TypeError(f"Аргумент 'float' функции '{node.root}' должен быть float или int, а получен {type(arg).__name__}")
+                elif param_type == "string" and not isinstance(arg, str):
+                    raise TypeError(f"Аргумент'string' функции '{node.root}' должен быть str, а получен {type(arg).__name__}")
+                elif param_type == "bool" and not isinstance(arg, bool):
+                    raise TypeError(f"Аргумент 'bool' функции '{node.root}' должен быть bool, а получен {type(arg).__name__}")
+            local_vars = {}
+            for i,param in enumerate(param_nodes):
+                local_vars[param.root.split()[1]] = {
+                    "type": param.root.split()[0],
+                    "value": args[i]
+                }
             original_vars = self.variables.copy()  # Сохраняем глобальные переменные
             self.variables.update(local_vars)
 
@@ -162,8 +196,8 @@ class Interpreter:
                 left = self.execute(node.children[0])
                 right = self.execute(node.children[1])
                 try:
-                    self.variables[node.children[0].root] = eval(f"{left} {node.root[0]} {right}")
-                    return self.variables[node.children[0].root]
+                    self.variables[node.children[0].root]["value"] = eval(f"{left} {node.root[0]} {right}")
+                    return self.variables[node.children[0].root]["value"]
                 except:
                     raise NameError(f"Переменная '{node.children[0].root}' не определена")
             else:  # Арифметические операции
@@ -177,34 +211,39 @@ class Interpreter:
             if var_name == "[]":
                 value = self.execute(node.children[1])
                 index = self.execute(node.children[0].children[1])
-                self.variables[node.children[0].children[0].root][index] = value
+                self.variables[node.children[0].children[0].root]["value"][index] = value
             else:
                 value = self.execute(node.children[1])
-                self.variables[var_name.split()[1]] = value
+                if len(var_name.split())>1:
+                    var_name = self.execute(node.children[0])
+                self.variables[var_name]["value"] = value
             return value
 
         # Массивы
         if node.root == "[]":
             array_name = node.children[0].root
             if len(array_name.split())>1:
-                array_name = array_name.split()[1]
-                self.variables[array_name] = [None] * self.execute(node.children[1])
+                typ,array_name = array_name.split()
+                self.variables[array_name] = {
+                    "type": typ,
+                    "value":[None] * self.execute(node.children[1])
+                }
                 return None
             else:
                 index = self.execute(node.children[1])
-                return self.variables[array_name][index]
+                return self.variables[array_name]["value"][index]
 
         if node.root == "[]=":
             array_name = node.children[0].root
             index = self.execute(node.children[1])
             value = self.execute(node.children[2])
-            self.variables[array_name][index] = value
+            self.variables[array_name]["value"][index] = value
             return value
 
         # Переменные
         if node.root.isidentifier():
             if node.root in self.variables:
-                return self.variables[node.root]
+                return self.variables[node.root]["value"]
             else:
                 raise NameError(f"Переменная '{node.root}' не определена")
 
