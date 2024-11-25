@@ -51,14 +51,18 @@ class Interpreter:
                 user_input = input()
                 try:
                     # Пробуем преобразовать ввод в число
-                    if self.variables[inp.root]["type"] == "int" and not user_input.isdigit():
-                        raise TypeError(f"Аргумент должен быть int, а получен {type(arg).__name__}")
-                    elif self.variables[inp.root]["type"] == "float" and not user_input.isde
+                    if (self.variables[inp.root]["type"] == "int" or self.variables[inp.root]["type"] == "bool") and not user_input.isdigit():
+                        raise TypeError(f"Аргумент должен быть int")
+                    elif self.variables[inp.root]["type"] == "float":
+                        try:
+                            float(user_input)
+                        except TypeError:
+                            raise TypeError(f"Аргумент должен быть float")
+                    else:
+                        self.variables[inp.root]["value"] = f"\"{user_input}\""
                     self.variables[inp.root]["value"]=int(user_input) if user_input.isdigit() else float(user_input)
-
-                except ValueError:
-                    # Возвращаем как строку, если не число
-                    self.variables[inp.root]["value"] = f"\"{user_input}\""
+                except Exception as e:
+                    raise TypeError(e)
             return None
             # prompt = self.execute(node.children[0]) if node.children[0] else ""
             # user_input = input(prompt)
